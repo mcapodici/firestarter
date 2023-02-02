@@ -19,3 +19,16 @@ Answers given:
 > ✔ Would you like to use `src/` directory with this project? … Yes  
 > ✔ Would you like to use experimental `app/` directory with this project? … No   
 > ✔ What import alias would you like configured? … @/*  
+
+* Set up project in Vercel: 
+    * Log into Vercel
+    * Add a new project
+    * Use this repo
+    * Choose root directory `firestarter-nextjs`
+    * Click Deploy
+
+    This will deploy off main, so use branches to avoid deployments.
+
+    Note: this got deployed to `https://firestarter-three.vercel.app/` in my case.
+
+    No code changes to repo.
