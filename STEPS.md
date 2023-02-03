@@ -32,3 +32,16 @@ Answers given:
     Note: this got deployed to `https://firestarter-three.vercel.app/` in my case.
 
     No code changes to repo.
+
+* Add testing
+
+```
+yarn add --dev @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/testing-library__jest-dom jest jest-environment-jsdom
+```
+
+For good measure rearrange `package.json` so things like `typescript` are in `devDependencies`
+
+Copied various files from https://github.com/vercel/next.js/blob/canary/examples/with-jest/, adapting them. See [this PR](https://github.com/mcapodici/firestarter/pull/2) for details.
+
+Removed test that only passes for old next.js welcome page. Since the welcome page will go, no need to really get that working.
+
