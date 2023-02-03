@@ -32,3 +32,11 @@ Answers given:
     Note: this got deployed to `https://firestarter-three.vercel.app/` in my case.
 
     No code changes to repo.
+
+* Add testing
+
+```
+yarn add --dev @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/testing-library__jest-dom jest jest-environment-jsdom
+```
+
+For good measure rearrange `package.json` so things like `typescript` are in `devDependencies`
