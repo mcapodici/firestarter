@@ -40,3 +40,8 @@ yarn add --dev @testing-library/jest-dom @testing-library/react @testing-library
 ```
 
 For good measure rearrange `package.json` so things like `typescript` are in `devDependencies`
+
+Copied various files from https://github.com/vercel/next.js/blob/canary/examples/with-jest/, adapting them. See PR for details.
+
+Removed test that only passes for old next.js welcome page. Since the welcome page will go, no need to really get that working.
+
