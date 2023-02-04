@@ -45,9 +45,5 @@ Copied various files from https://github.com/vercel/next.js/blob/canary/examples
 
 Removed test that only passes for old next.js welcome page. Since the welcome page will go, no need to really get that working.
 
-* Add testing to Github action
-
-* Visit actions page https://github.com/mcapodici/firestarter/actions/new
-* Find Node.js By GitHub Actions, and click Configure.
-* Rename file generated to `tests.yml`
-* 
+* Add testing to Github action (.github/workflows/firestarter-nextjs-test.yml)
+* Add tailwind support
