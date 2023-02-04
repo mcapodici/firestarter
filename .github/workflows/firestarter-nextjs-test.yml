@@ -8,8 +8,8 @@ on:
 
 defaults:
   run:
-    working-directory: ./firestarter-nextjs
-    
+    working-directory: firestarter-nextjs
+
 jobs:
   build:
 
@@ -25,7 +25,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        cache: 'yarn'
+        cache-dependency-path: firestarter-nextjs
     - run: yarn install --frozen-lockfile
     - run: yarn run build
     - run: yarn test --ci
