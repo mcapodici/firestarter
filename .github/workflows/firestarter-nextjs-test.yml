@@ -1,10 +1,8 @@
-name: Node.js CI
+name: Tests (firestarter-nextjs)
 
 on:
-  push:
-    branches: [ "main", "run-tests-in-ci" ]
-  pull_request:
-    branches: [ "main" ]
+  push
+  pull_request
 
 defaults:
   run:
