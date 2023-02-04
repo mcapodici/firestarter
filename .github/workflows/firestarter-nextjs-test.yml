@@ -28,5 +28,5 @@ jobs:
         cache: 'yarn'
         cache-dependency-path: firestarter-nextjs
     - run: yarn install --frozen-lockfile
-    - run: yarn run build
-    - run: yarn test --ci
+    - run: yarn build
+    - run: yarn test:ci
