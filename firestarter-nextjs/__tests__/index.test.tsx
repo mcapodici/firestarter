@@ -1,12 +1,12 @@
-import { getByText, render, screen } from '@testing-library/react'
+import { fireEvent, getByText, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import Home from '@/pages/index'
+import mockRouter from 'next-router-mock';
+import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
 
 describe('Home', () => {
-  beforeEach(() => render(<Home/>));
-  it('shows the navigation', () => {
-    const nav = screen.getByRole('navigation');
-    ['Dashboard', 'Team', 'Projects', 'Login', 'Sign up for free'].forEach(t => expect(getByText(nav, t)).toBeVisible());
-  });
+  beforeEach(() => render(<Home />));
+
   it('shows the hero text', () => {
     const heading = screen.getByRole('heading');
     expect(heading).toHaveTextContent('The best offer for your business');
@@ -16,4 +16,17 @@ describe('Home', () => {
     expect(image.getAttribute('src')).toBeDefined();
     expect(image).toBeVisible();
   });
-})
+});
+
+describe('Navigation', () => {
+  beforeEach(() => render(<Home />, { wrapper: MemoryRouterProvider }));
+  it('is shown', () => {
+    const nav = screen.getByRole('navigation');
+    ['Dashboard', 'Team', 'Projects', 'Login', 'Sign up for free'].forEach(t => expect(getByText(nav, t)).toBeVisible());
+  });
+  it('signup', () => {
+    const signup = screen.getByText('Sign up for free');
+    fireEvent.click(signup);
+    expect(mockRouter.asPath).toEqual('/signup');
+  })
+});
