@@ -1,5 +1,4 @@
 import { fireEvent, getByText, render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import Home from '@/pages/index'
 import mockRouter from 'next-router-mock';
 import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
