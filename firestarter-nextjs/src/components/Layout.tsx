@@ -13,7 +13,7 @@ export default function Layout(props: Props) {
             <title>Firestarter!</title>
             <meta name="description" content="Firestarter" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <link rel="icon" href="/favicon.ico" />
+            <link rel="icon" href="/favicon.png" />
         </Head>
         <main>
             <section className="mb-40">

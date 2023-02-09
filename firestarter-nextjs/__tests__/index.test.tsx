@@ -11,7 +11,7 @@ describe('Home', () => {
     expect(heading).toHaveTextContent('The best offer for your business');
   });
   it('shows the hero image', () => {
-    const image = screen.getByRole('img');
+    const image = screen.getByTestId('hero-image');
     expect(image.getAttribute('src')).toBeDefined();
     expect(image).toBeVisible();
   });
