@@ -47,3 +47,21 @@ Removed test that only passes for old next.js welcome page. Since the welcome pa
 
 * Add testing to Github action (.github/workflows/firestarter-nextjs-test.yml)
 * Add tailwind support
+
+* Create a Firebase Project
+* Copy the JSON of all cliend-side variables to these environment variables:
+
+```
+NEXT_PUBLIC_FIREBASE_API_KEY
+NEXT_PUBLIC_FIREBASE_AUTHDOMAIN
+NEXT_PUBLIC_FIREBASE_PROJECTID
+NEXT_PUBLIC_FIREBASE_STORAGEBUCKET
+NEXT_PUBLIC_FIREBASE_SENDERID
+NEXT_PUBLIC_FIREBASE_APPID
+```
+
+    * In codespaces this can be set under {url_to_repo}/settings/secrets/codespaces/new
+    * In vercel, se this under {url_to_project}/settings/environment-variables
+
+Note that none of this configuration is secret, it will be available in the bundled JS.
+
