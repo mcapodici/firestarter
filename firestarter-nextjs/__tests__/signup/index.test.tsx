@@ -1,8 +1,19 @@
 import { render, screen } from '@testing-library/react'
 import Signup from '@/pages/signup';
+import { Context, ContextInterface } from '@/context/Context';
+import { SignupResult } from '@/backend/IBackend';
 
 describe('Signup', () => {
-  beforeEach(() => render(<Signup />));
+
+  const mockContext = {
+    backend: { signup: jest.fn(async (u: string, p: string) => SignupResult.Fail) }
+  };
+
+  beforeEach(() => render(
+    <Context.Provider value={mockContext}>
+      <Signup />
+    </Context.Provider>
+  ));
 
   it('correct form elements shown', () => {
     expect(screen.getByText('Reap the benefits')).toBeInTheDocument();
@@ -12,5 +23,9 @@ describe('Signup', () => {
     const pw = screen.getAllByTestId('password');
     expect(pw.length).toBe(1);
     expect(pw[0].attributes.getNamedItem('type')?.value).toBe('password');
+  });
+
+  it('sends the submitted data to the signup service', () => {
+    
   });
 });

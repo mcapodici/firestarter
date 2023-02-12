@@ -1,7 +1,7 @@
 import SignupForm from '@/components/SignupForm'
 import Layout from '@/components/Layout'
-import { Context } from '@/context/context';
 import { useContext, useState } from 'react';
+import { Context } from '@/context/Context';
 
 export default function Signup() {
   const { backend } = useContext(Context);
