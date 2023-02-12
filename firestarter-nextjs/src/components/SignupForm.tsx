@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 interface Props {
+    onSignupClick: (username: string, password: string) => void;
 }
 
 const signupButtonClasses = `w-full
@@ -35,7 +38,9 @@ ease-in-out
 m-0
 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none`;
 
-export default function SignupForm() {
+export default function SignupForm({ onSignupClick }: Props) {
+    const [username, setUserName] = useState('');
+    const [password, setPassword] = useState('');
     return <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md">
         <form>
             <div className="grid md:grid-cols-2 md:gap-4">
@@ -47,12 +52,12 @@ export default function SignupForm() {
                 </div>
             </div>
             <div className="form-group mb-6">
-                <input type="email" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
+                <input value={username} onChange={(evt) => setUserName(evt.target.value)} type="email" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
             </div>
             <div className="form-group mb-6">
-                <input type="password" className={inputClasses} data-testid="password" aria-describedby="Password" placeholder="Password" />
+                <input value={password} onChange={(evt) => setPassword(evt.target.value)}  type="password" className={inputClasses} data-testid="password" aria-describedby="Password" placeholder="Password" />
             </div>
-            <button type="submit" className={signupButtonClasses}>Sign up</button>
+            <button type="submit" onClick={() => onSignupClick(username, password)} className={signupButtonClasses}>Sign up</button>
         </form>
     </div>;
 }
