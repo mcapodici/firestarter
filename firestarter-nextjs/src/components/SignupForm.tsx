@@ -55,9 +55,13 @@ export default function SignupForm({ onSignupClick }: Props) {
                 <input value={username} onChange={(evt) => setUserName(evt.target.value)} type="email" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
             </div>
             <div className="form-group mb-6">
-                <input value={password} onChange={(evt) => setPassword(evt.target.value)}  type="password" className={inputClasses} data-testid="password" aria-describedby="Password" placeholder="Password" />
+                <input value={password} onChange={(evt) => setPassword(evt.target.value)} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
             </div>
-            <button type="submit" onClick={() => onSignupClick(username, password)} className={signupButtonClasses}>Sign up</button>
+            <button type="submit" onClick={(event) => {
+                event.preventDefault();
+                if (username.length > 0 && password.length > 0)
+                    onSignupClick(username, password);
+            }} className={signupButtonClasses}>Sign up</button>
         </form>
     </div>;
 }
