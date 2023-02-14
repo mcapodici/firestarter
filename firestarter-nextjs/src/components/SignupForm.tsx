@@ -42,14 +42,13 @@ focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none`;
 type FormData = {
     username: string;
     password: string;
-  };
+};
 
 export default function SignupForm({ onSignupClick }: Props) {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>();
 
-    const onSubmit = ({username, password}: FormData) => {
-        if (username.length > 0 && password.length > 0)
-            onSignupClick(username, password);
+    const onSubmit = ({ username, password }: FormData) => {
+        onSignupClick(username, password);
     };
 
     return <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md">
@@ -63,10 +62,10 @@ export default function SignupForm({ onSignupClick }: Props) {
                 </div>
             </div>
             <div className="form-group mb-6">
-                <input {...register("username")} type="email" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
+                <input {...register("username", { required: true })} type="email" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
             </div>
             <div className="form-group mb-6">
-                <input {...register("password")} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
+                <input {...register("password", { required: true })} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
             </div>
             <button type="submit" className={signupButtonClasses}>Sign up</button>
         </form>

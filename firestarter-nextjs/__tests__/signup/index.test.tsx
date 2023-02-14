@@ -33,21 +33,32 @@ describe('Signup', () => {
   });
 
   it('sends the submitted data to the signup service', async () => {
-    await act(async () => {
-      const user = userEvent.setup();
-      await user.type(screen.getByPlaceholderText('Email address'), 'me@them.com');
-      await user.type(screen.getByPlaceholderText('Password'), 'password123');
-      fireEvent.click(screen.getByText('Sign up'));
-    });
+    const user = userEvent.setup();
+    await user.type(screen.getByPlaceholderText('Email address'), 'me@them.com');
+    await user.type(screen.getByPlaceholderText('Password'), 'password123');
+    await user.click(screen.getByText('Sign up'));
     expect(mockContext.backend.signup).toBeCalledWith("me@them.com", "password123");
   });
 
-  it('validates the email address', async () => {
-    await act(async () => {
+  it('validates the email address exists', async () => {
+    const user = userEvent.setup();
+    await user.type(screen.getByPlaceholderText('Password'), 'password123');
+    await user.click(screen.getByText('Sign up'));
+    expect(mockContext.backend.signup).not.toBeCalled();
+  });
+
+  it('validates the password exists', async () => {
+    const user = userEvent.setup();
+    await user.type(screen.getByPlaceholderText('Email address'), 'me@them.com');
+    await user.click(screen.getByText('Sign up'));
+    expect(mockContext.backend.signup).not.toBeCalled();
+  });
+
+  it('validates the password format', async () => {
       const user = userEvent.setup();
-      await user.clear(screen.getByPlaceholderText('Email address'));
+      await user.type(screen.getByPlaceholderText('Email address'), 'me-them.com');
+      await user.type(screen.getByPlaceholderText('Password'), 'password123');
       fireEvent.click(screen.getByText('Sign up'));
-    });
     expect(mockContext.backend.signup).not.toBeCalled();
   });
 
