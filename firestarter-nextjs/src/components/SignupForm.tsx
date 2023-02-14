@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 interface Props {
     onSignupClick: (username: string, password: string) => void;
@@ -38,11 +39,21 @@ ease-in-out
 m-0
 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none`;
 
+type FormData = {
+    username: string;
+    password: string;
+  };
+
 export default function SignupForm({ onSignupClick }: Props) {
-    const [username, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+    const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>();
+
+    const onSubmit = ({username, password}: FormData) => {
+        if (username.length > 0 && password.length > 0)
+            onSignupClick(username, password);
+    };
+
     return <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md">
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid md:grid-cols-2 md:gap-4">
                 <div className="form-group mb-6">
                     <input type="text" className={inputClasses} aria-describedby="First Name" placeholder="First name" />
@@ -52,16 +63,12 @@ export default function SignupForm({ onSignupClick }: Props) {
                 </div>
             </div>
             <div className="form-group mb-6">
-                <input value={username} onChange={(evt) => setUserName(evt.target.value)} type="email" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
+                <input {...register("username")} type="email" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
             </div>
             <div className="form-group mb-6">
-                <input value={password} onChange={(evt) => setPassword(evt.target.value)} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
+                <input {...register("password")} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
             </div>
-            <button type="submit" onClick={(event) => {
-                event.preventDefault();
-                if (username.length > 0 && password.length > 0)
-                    onSignupClick(username, password);
-            }} className={signupButtonClasses}>Sign up</button>
+            <button type="submit" className={signupButtonClasses}>Sign up</button>
         </form>
     </div>;
 }

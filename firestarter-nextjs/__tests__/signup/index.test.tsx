@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import Signup from '@/pages/signup';
 import { Context } from '@/context/Context';
 import { SignupResult } from '@/backend/IBackend';
@@ -33,17 +33,21 @@ describe('Signup', () => {
   });
 
   it('sends the submitted data to the signup service', async () => {
-    const user = userEvent.setup();
-    await user.type(screen.getByPlaceholderText('Email address'), 'me@them.com');
-    await user.type(screen.getByPlaceholderText('Password'), 'password123');
-    fireEvent.click(screen.getByText('Sign up'));
+    await act(async () => {
+      const user = userEvent.setup();
+      await user.type(screen.getByPlaceholderText('Email address'), 'me@them.com');
+      await user.type(screen.getByPlaceholderText('Password'), 'password123');
+      fireEvent.click(screen.getByText('Sign up'));
+    });
     expect(mockContext.backend.signup).toBeCalledWith("me@them.com", "password123");
   });
 
   it('validates the email address', async () => {
-    const user = userEvent.setup();
-    await user.clear(screen.getByPlaceholderText('Email address'));
-    fireEvent.click(screen.getByText('Sign up'));
+    await act(async () => {
+      const user = userEvent.setup();
+      await user.clear(screen.getByPlaceholderText('Email address'));
+      fireEvent.click(screen.getByText('Sign up'));
+    });
     expect(mockContext.backend.signup).not.toBeCalled();
   });
 
