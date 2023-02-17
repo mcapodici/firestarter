@@ -60,15 +60,15 @@ describe('Signup', () => {
     expect(alerts[0]).toHaveTextContent("Password is required");
   });
 
-  // it('validates the password format', async () => {
-  //   const user = userEvent.setup();
-  //   await user.type(screen.getByPlaceholderText('Email address'), 'methem');
-  //   await user.type(screen.getByPlaceholderText('Password'), 'password123');
-  //   await user.click(screen.getByText('Sign up'));
-  //   expect(mockContext.backend.signup).not.toBeCalled();
-  //   const alerts = await screen.findAllByRole("alert");
-  //   expect(alerts).toHaveLength(1);
-  //   expect(alerts[0]).toHaveTextContent("Password is required");
-  // });
+  it('validates the password format', async () => {
+    const user = userEvent.setup();
+    await user.type(screen.getByPlaceholderText('Email address'), 'methem');
+    await user.type(screen.getByPlaceholderText('Password'), 'password123');
+    await user.click(screen.getByText('Sign up'));
+    expect(mockContext.backend.signup).not.toBeCalled();
+    const alerts = await screen.findAllByRole("alert");
+    expect(alerts).toHaveLength(1);
+    expect(alerts[0]).toHaveTextContent("Email address is invalid");
+  });
 
 });

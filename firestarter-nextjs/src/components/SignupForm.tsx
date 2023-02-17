@@ -62,7 +62,7 @@ export default function SignupForm({ onSignupClick }: Props) {
                 </div>
             </div>
             <div className="form-group mb-6">
-                <input {...register("username", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="email" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
+                <input {...register("username", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="text" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
                 {errors.username && <p role="alert">{errors.username?.message}</p>}
             </div>
             <div className="form-group mb-6">
