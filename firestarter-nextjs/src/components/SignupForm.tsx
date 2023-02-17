@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldError, useForm } from "react-hook-form";
+import { Alert } from "./Alert";
 
 interface Props {
     onSignupClick: (username: string, password: string) => void;
@@ -51,6 +52,8 @@ export default function SignupForm({ onSignupClick }: Props) {
         onSignupClick(username, password);
     };
 
+    const fieldErrorAlertMsg = (err: FieldError | undefined) => err && <div className="mt-2"><Alert level="danger">{err.message}</Alert></div>;
+
     return <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid md:grid-cols-2 md:gap-4">
@@ -63,11 +66,11 @@ export default function SignupForm({ onSignupClick }: Props) {
             </div>
             <div className="form-group mb-6">
                 <input {...register("username", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="text" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
-                {errors.username && <p role="alert">{errors.username?.message}</p>}
+                {fieldErrorAlertMsg(errors.username)}
             </div>
             <div className="form-group mb-6">
                 <input {...register("password", { required: "Password is required" })} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
-                {errors.password && <p role="alert">{errors.password?.message}</p>}
+                {fieldErrorAlertMsg(errors.password)}
             </div>
             <button type="submit" className={signupButtonClasses}>Sign up</button>
         </form>
