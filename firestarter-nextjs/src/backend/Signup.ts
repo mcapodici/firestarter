@@ -8,7 +8,9 @@ export default async function signup(email: string, password: string): Promise<S
         const credential = await createUserWithEmailAndPassword(auth, email, password);
         return { result: 'success', uid: credential.user.uid };
     } catch (e: unknown) {
-        if (!(e instanceof FirebaseError)) { throw e; }
+        if (!(e instanceof FirebaseError)) {
+            return { result: 'fail', message: '' }
+        };
         if (e.code === 'auth/weak-password') {
             return { result: 'weak-password' };
         }

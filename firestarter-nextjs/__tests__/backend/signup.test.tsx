@@ -36,4 +36,11 @@ describe('Signup Function', () => {
         expect(result).toEqual({ result: 'fail', message: 'Cosmic Radiation' });
         expect(createUserWithEmailAndPassword).toBeCalledWith(undefined, 'ben@example.com', 'fred');
     });
+
+    it('Handles an unexpected error entirely', async () => {
+        createUserWithEmailAndPassword.mockRejectedValue('xyz');
+        const result = await signup('ben@example.com', 'fred');
+        expect(result).toEqual({ result: 'fail', message: '' });
+        expect(createUserWithEmailAndPassword).toBeCalledWith(undefined, 'ben@example.com', 'fred');
+    });
 });
