@@ -15,7 +15,9 @@ export const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APPID
 };
 
-if (!isServerSide()) {
-  app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
+export function initFirebase() {
+  if (!isServerSide()) {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+  }
 }

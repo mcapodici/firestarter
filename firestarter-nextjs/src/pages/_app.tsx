@@ -2,6 +2,7 @@ import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import '../styles/index.css'
 import { useEffect } from 'react';
+import { initFirebase } from '@/firebase/config';
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -11,6 +12,11 @@ export default function App({ Component, pageProps }: AppProps) {
       (await import('tw-elements')).default;
     };
     use();
+  }, []);
+
+  // Code that we want in the app level, but not when testing components
+  useEffect(() => {
+    initFirebase();
   }, []);
 
   return <Component {...pageProps} />

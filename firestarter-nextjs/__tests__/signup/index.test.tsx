@@ -1,13 +1,13 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import Signup from '@/pages/signup';
 import { Context } from '@/context/Context';
-import { SignupResult } from '@/backend/IBackend';
 import userEvent from "@testing-library/user-event";
+import { SignupResult } from '@/backend/IBackend';
 
 describe('Signup', () => {
 
   const mockContext = {
-    backend: { signup: jest.fn(async (u: string, p: string) => SignupResult.Fail) }
+    backend: { signup: jest.fn(async (u: string, p: string) => ({ result: 'fail' } as SignupResult)) }
   };
 
   beforeEach(() => {
