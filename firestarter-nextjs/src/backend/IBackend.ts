@@ -1,10 +1,8 @@
-export enum SignupResult {
-    Success,
-    Fail,
-    InvalidUsername,
-    InvalidPassword
-}
+export type SignupSuccess = { result: 'success', uid: string };
+export type SignupFail = { result: 'fail' };
+export type SignupFailWeakPassword = { result: 'weak-password' };
+export type SignupResult = SignupSuccess | SignupFail | SignupFailWeakPassword;
 
 export interface IBackend {
-    signup(username: string, password: string): Promise<SignupResult>;
+    signup(email: string, password: string): Promise<SignupResult>;
 }

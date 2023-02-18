@@ -13,9 +13,13 @@ export default function Signup() {
           <h3 className="text-3xl font-bold mb-8">Sign up for free now!</h3>
         </div>
         <div className="m-auto max-w-md">
-          <SignupForm onSignupClick={(username, password) => {
-            const signupResult = backend.signup(username, password);
-            console.log(username, password);
+          <SignupForm onSignupClick={async (email, password) => {
+            const signupResult = await backend.signup(email, password);
+            if (signupResult.result === 'success') {
+              console.log('signup success, uid = ' + signupResult.uid);
+            } else {
+              console.log('signup fail');
+            }
           }} />
         </div>
       </Layout>
