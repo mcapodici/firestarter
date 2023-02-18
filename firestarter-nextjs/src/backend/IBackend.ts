@@ -1,5 +1,5 @@
 export type SignupSuccess = { result: 'success', uid: string };
-export type SignupFail = { result: 'fail' };
+export type SignupFail = { result: 'fail', message: string };
 export type SignupFailWeakPassword = { result: 'weak-password' };
 export type SignupResult = SignupSuccess | SignupFail | SignupFailWeakPassword;
 
