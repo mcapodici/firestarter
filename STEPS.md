@@ -65,3 +65,4 @@ NEXT_PUBLIC_FIREBASE_APPID
 
 Note that none of this configuration is secret, it will be available in the bundled JS.
 
+* Enable Auth in Firebase portal - just Email/Password for now.

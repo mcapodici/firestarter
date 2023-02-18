@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { Alert } from "./Alert";
 
 interface Props {
-    onSignupClick: (username: string, password: string) => void;
+    onSignupClick: (email: string, password: string) => void;
 }
 
 const signupButtonClasses = `w-full
@@ -41,15 +40,15 @@ m-0
 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none`;
 
 type FormData = {
-    username: string;
+    email: string;
     password: string;
 };
 
 export default function SignupForm({ onSignupClick }: Props) {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>();
 
-    const onSubmit = ({ username, password }: FormData) => {
-        onSignupClick(username, password);
+    const onSubmit = ({ email, password }: FormData) => {
+        onSignupClick(email, password);
     };
 
     const fieldErrorAlertMsg = (err: FieldError | undefined) => err && <div className="mt-2"><Alert level="danger">{err.message}</Alert></div>;
@@ -65,8 +64,8 @@ export default function SignupForm({ onSignupClick }: Props) {
                 </div>
             </div>
             <div className="form-group mb-6">
-                <input {...register("username", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="text" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
-                {fieldErrorAlertMsg(errors.username)}
+                <input {...register("email", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="text" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
+                {fieldErrorAlertMsg(errors.email)}
             </div>
             <div className="form-group mb-6">
                 <input {...register("password", { required: "Password is required" })} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
