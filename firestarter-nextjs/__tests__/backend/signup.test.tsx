@@ -9,26 +9,31 @@ jest.mock<Partial<typeof dep>>('firebase/auth',
         createUserWithEmailAndPassword: (...args) => createUserWithEmailAndPassword(...args)
     }));
 
-   
+
 describe('Signup Function', () => {
     beforeEach(() => {
         jest.resetAllMocks();
     })
 
-    it('Works with successful signup', async () => {        
+    it('Works with successful signup', async () => {
         const mockCredentials = { user: { uid: "123" } } as any as UserCredential;
         createUserWithEmailAndPassword.mockResolvedValue(mockCredentials);
         const result = await signup('ben@example.com', 'fred1234!');
-        if (result.result !== 'success')
-            fail("Expect success");
-        expect(result.uid).toBe('123');
+        expect(result).toEqual({ result: 'success', uid: '123' });
         expect(createUserWithEmailAndPassword).toBeCalledWith(undefined, 'ben@example.com', 'fred1234!');
     });
 
-    it('Handles a weak password result from Firebase', async () => {        
+    it('Handles a weak password result from Firebase', async () => {
         createUserWithEmailAndPassword.mockRejectedValue(new FirebaseError('auth/weak-password', 'Weak PW'));
         const result = await signup('ben@example.com', 'fred');
-        expect(result.result).toBe('weak-password');
+        expect(result).toEqual({ result: 'weak-password' });
+        expect(createUserWithEmailAndPassword).toBeCalledWith(undefined, 'ben@example.com', 'fred');
+    });
+
+    it('Handles an unexpected result from Firebase', async () => {
+        createUserWithEmailAndPassword.mockRejectedValue(new FirebaseError('auth/something-unencountered', 'Cosmic Radiation'));
+        const result = await signup('ben@example.com', 'fred');
+        expect(result).toEqual({ result: 'fail', message: 'Cosmic Radiation' });
         expect(createUserWithEmailAndPassword).toBeCalledWith(undefined, 'ben@example.com', 'fred');
     });
 });
