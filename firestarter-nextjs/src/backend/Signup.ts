@@ -1,7 +1,7 @@
-import { auth } from "@/firebase/config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "@firebase/util";
 import { SignupResult } from "./IBackend";
+import { auth } from "@/firebase/config";
 
 export default async function signup(email: string, password: string): Promise<SignupResult> {
     try {
