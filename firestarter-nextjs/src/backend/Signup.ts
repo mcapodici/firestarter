@@ -12,8 +12,6 @@ export default async function signup(email: string, password: string): Promise<S
         if (e.code === 'auth/weak-password') {
             return { result: 'weak-password' };
         }
-        console.log(e.code);
-        console.log({...e});
         return { result: 'fail' };
     }
 }
