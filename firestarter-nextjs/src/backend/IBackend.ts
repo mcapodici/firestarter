@@ -12,6 +12,11 @@ export type SignupResult =
     SignupFailEmailIsInUse |
     SignupFailInvalidEmail;
 
+export interface ISignupData {
+    firstName?: string;
+    lastName?: string;
+}
+
 export interface IBackend {
-    signup(email: string, password: string): Promise<SignupResult>;
+    signup(email: string, password: string, data: ISignupData): Promise<SignupResult>;
 }

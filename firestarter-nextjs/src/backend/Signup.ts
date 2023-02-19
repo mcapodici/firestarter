@@ -1,13 +1,13 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
 import { FirebaseError } from "@firebase/util";
-import { SignupResult } from "./IBackend";
+import { ISignupData, SignupResult } from "./IBackend";
 import { auth } from "@/firebase/config";
 import { AUTH_EMAIL_ALREADY_IN_USE, AUTH_INVALID_EMAIL, AUTH_OPERATION_NOT_ALLOWED, AUTH_WEAK_PASSWORD } from "@/firebase/errorCodes";
 
-export default async function signup(email: string, password: string): Promise<SignupResult> {
+export default async function signup(email: string, password: string, data: ISignupData): Promise<SignupResult> {
+    let credential: UserCredential;
     try {
-        const credential = await createUserWithEmailAndPassword(auth, email, password);
-        return { result: 'success', uid: credential.user.uid };
+        credential = await createUserWithEmailAndPassword(auth, email, password);
     } catch (e: unknown) {
         if (!(e instanceof FirebaseError)) {
             return { result: 'fail', message: '' }
@@ -26,4 +26,5 @@ export default async function signup(email: string, password: string): Promise<S
         }
         return { result: 'fail', message: e.message };
     }
+    return { result: 'success', uid: credential.user.uid };
 }

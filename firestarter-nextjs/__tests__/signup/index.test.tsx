@@ -3,6 +3,7 @@ import Signup from '@/pages/signup';
 import { Context } from '@/context/Context';
 import userEvent from "@testing-library/user-event";
 import { SignupResult } from '@/backend/IBackend';
+import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 
 describe('Signup', () => {
 
@@ -22,6 +23,13 @@ describe('Signup', () => {
     jest.clearAllMocks();
   });
 
+  async function fillInAllFieldsValid(user: UserEvent) {
+    await user.type(screen.getByPlaceholderText('First name'), 'Ben');
+    await user.type(screen.getByPlaceholderText('Last name'), 'Neb');
+    await user.type(screen.getByPlaceholderText('Email address'), 'me@them.com');
+    await user.type(screen.getByPlaceholderText('Password'), 'password123');
+  }
+
   it('correct form elements shown', () => {
     expect(screen.getByText('Reap the benefits')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('First name')).toBeInTheDocument();
@@ -34,10 +42,9 @@ describe('Signup', () => {
 
   it('sends the submitted data to the signup service', async () => {
     const user = userEvent.setup();
-    await user.type(screen.getByPlaceholderText('Email address'), 'me@them.com');
-    await user.type(screen.getByPlaceholderText('Password'), 'password123');
+    await fillInAllFieldsValid(user);
     await user.click(screen.getByText('Sign up'));
-    expect(mockContext.backend.signup).toBeCalledWith("me@them.com", "password123");
+    expect(mockContext.backend.signup).toBeCalledWith("me@them.com", "password123", { firstName: 'Ben', lastName: 'Neb' });
   });
 
   it('validates the email address exists', async () => {
@@ -74,8 +81,7 @@ describe('Signup', () => {
   describe('handles firebase error return code', () => {
     async function submitFormAndCheckAlertText(expectedAlert: string) {
       const user = userEvent.setup();
-      await user.type(screen.getByPlaceholderText('Email address'), 'me@them.com');
-      await user.type(screen.getByPlaceholderText('Password'), 'password123');
+      await fillInAllFieldsValid(user);
       await user.click(screen.getByText('Sign up'));
       const alerts = await screen.findAllByRole("alert");
       expect(alerts).toHaveLength(1);
