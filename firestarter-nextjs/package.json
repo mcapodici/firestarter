@@ -15,7 +15,8 @@
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.43.1"
+    "react-hook-form": "^7.43.1",
+    "ts-pattern": "^4.1.4"
   },
   "devDependencies": {
     "@next/font": "13.1.6",
