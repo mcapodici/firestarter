@@ -41,9 +41,11 @@ export default function SignupForm({ onSignupClick }: Props) {
             <div className="grid md:grid-cols-2 md:gap-4">
                 <div className="form-group mb-6">
                     <input {...register("firstName", { required: "First name is required" })} type="text" className={inputClasses} aria-describedby="First name" placeholder="First name" />
+                    {fieldErrorAlertMsg(errors.firstName)}
                 </div>
                 <div className="form-group mb-6">
                     <input {...register("lastName", { required: "Last name is required" })}  type="text" className={inputClasses} aria-describedby="Last name" placeholder="Last name" />
+                    {fieldErrorAlertMsg(errors.lastName)}
                 </div>
             </div>
             <div className="form-group mb-6">
