@@ -1,8 +1,10 @@
+import { SignupResult } from "@/backend/IBackend";
 import { FieldError, useForm } from "react-hook-form";
+import { match } from "ts-pattern";
 import { Alert } from "./Alert";
 
 interface Props {
-    onSignupClick: (email: string, password: string) => void;
+    onSignupClick: (email: string, password: string) => Promise<SignupResult>;
 }
 
 const signupButtonClasses = `w-full
@@ -45,10 +47,23 @@ type FormData = {
 };
 
 export default function SignupForm({ onSignupClick }: Props) {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, formState: { errors }, setError } = useForm<FormData>();
 
-    const onSubmit = ({ email, password }: FormData) => {
-        onSignupClick(email, password);
+
+    const onSubmit = async ({ email, password }: FormData) => {
+        const result = await onSignupClick(email, password);
+        if (result.result === 'success') {
+            // TODO - redirect to login
+            return;
+        }
+
+        const message = match(result.result)
+            .with('invalid-email', () => "Email address is invalid.")
+            .with('weak-password', () => "Password doesn't meet the requirements. Password should have at least 6 characters.")
+            .with('email-in-use', () => "An account with this email already exists. Please pick another email, or try signing in.")
+            .otherwise(() => "Sorry there was a server problem while signing up, please try again later.")
+
+        setError('root.serverError', { type: result.result, message })
     };
 
     const fieldErrorAlertMsg = (err: FieldError | undefined) => err && <div className="mt-2"><Alert level="danger">{err.message}</Alert></div>;
@@ -72,6 +87,8 @@ export default function SignupForm({ onSignupClick }: Props) {
                 {fieldErrorAlertMsg(errors.password)}
             </div>
             <button type="submit" className={signupButtonClasses}>Sign up</button>
+
+            {errors.root?.serverError && <div className="mt-2"><Alert level="danger">{errors.root.serverError.message}</Alert></div>}
         </form>
     </div>;
 }

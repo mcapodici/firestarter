@@ -71,4 +71,41 @@ describe('Signup', () => {
     expect(alerts[0]).toHaveTextContent("Email address is invalid");
   });
 
+  describe('handles firebase error return code', () => {
+    async function submitFormAndCheckAlertText(expectedAlert: string) {
+      const user = userEvent.setup();
+      await user.type(screen.getByPlaceholderText('Email address'), 'me@them.com');
+      await user.type(screen.getByPlaceholderText('Password'), 'password123');
+      await user.click(screen.getByText('Sign up'));
+      const alerts = await screen.findAllByRole("alert");
+      expect(alerts).toHaveLength(1);
+      expect(alerts[0]).toHaveTextContent(expectedAlert);
+    }
+
+    it('invalid-email', async () => {
+      mockContext.backend.signup.mockResolvedValue({ result: 'invalid-email' });
+      await submitFormAndCheckAlertText("Email address is invalid");
+    });
+
+    it('accounts-not-enabled', async () => {
+      mockContext.backend.signup.mockResolvedValue({ result: 'accounts-not-enabled' });
+      await submitFormAndCheckAlertText("Sorry there was a server problem while signing up, please try again later.");
+    });
+
+    it('email-in-use', async () => {
+      mockContext.backend.signup.mockResolvedValue({ result: 'email-in-use' });
+      await submitFormAndCheckAlertText("An account with this email already exists. Please pick another email, or try signing in.");
+    });
+
+    it('fail', async () => {
+      mockContext.backend.signup.mockResolvedValue({ result: 'fail', message: 'Error 500' });
+      await submitFormAndCheckAlertText("Sorry there was a server problem while signing up, please try again later.");
+    });
+
+    it('weak-password', async () => {
+      mockContext.backend.signup.mockResolvedValue({ result: 'weak-password' });
+      await submitFormAndCheckAlertText("Password doesn't meet the requirements. Password should have at least 6 characters.");
+    });
+  });
+
 });

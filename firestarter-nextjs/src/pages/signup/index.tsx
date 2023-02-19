@@ -15,11 +15,7 @@ export default function Signup() {
         <div className="m-auto max-w-md">
           <SignupForm onSignupClick={async (email, password) => {
             const signupResult = await backend.signup(email, password);
-            if (signupResult.result === 'success') {
-              console.log('signup success, uid = ' + signupResult.uid);
-            } else {
-              console.log('signup fail');
-            }
+            return signupResult;
           }} />
         </div>
       </Layout>

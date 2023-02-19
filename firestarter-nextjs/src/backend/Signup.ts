@@ -12,7 +12,6 @@ export default async function signup(email: string, password: string): Promise<S
         if (!(e instanceof FirebaseError)) {
             return { result: 'fail', message: '' }
         };
-        console.log({ ...e }, e.message);
         if (e.code === AUTH_WEAK_PASSWORD) {
             return { result: 'weak-password' };
         }
