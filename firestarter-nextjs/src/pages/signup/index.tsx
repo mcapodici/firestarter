@@ -13,8 +13,8 @@ export default function Signup() {
           <h3 className="text-3xl font-bold mb-8">Sign up for free now!</h3>
         </div>
         <div className="m-auto max-w-md">
-          <SignupForm onSignupClick={async (email, password) => {
-            const signupResult = await backend.signup(email, password);
+          <SignupForm onSignupClick={async (firstName, lastName, email, password) => {
+            const signupResult = await backend.signup(email, password, { firstName, lastName });
             return signupResult;
           }} />
         </div>
