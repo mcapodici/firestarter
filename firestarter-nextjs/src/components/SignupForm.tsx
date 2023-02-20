@@ -25,13 +25,11 @@ export default function SignupForm({ onSignupClick }: Props) {
             return;
         }
 
-        const message = match(result.result)
-            .with('invalid-email', () => "Email address is invalid.")
-            .with('weak-password', () => "Password doesn't meet the requirements. Password should have at least 6 characters.")
-            .with('email-in-use', () => "An account with this email already exists. Please pick another email, or try signing in.")
-            .otherwise(() => "Sorry there was a server problem while signing up, please try again later.")
-
-        setError('root.serverError', { type: result.result, message })
+        match(result.result)
+            .with('invalid-email', () => setError('email', { message: "Email address is invalid." }))
+            .with('email-in-use', () => setError('email', { message: "An account with this email already exists. Please pick another email, or try signing in." }))
+            .with('weak-password', () => setError('password', { message: "Password doesn't meet the requirements. Password should have at least 6 characters." }))
+            .otherwise(() => setError('root.serverError', { message: "Sorry there was a server problem while signing up, please try again later." }));
     };
 
     const fieldErrorAlertMsg = (err: FieldError | undefined) => err && <div className="mt-2"><Alert level="danger">{err.message}</Alert></div>;
