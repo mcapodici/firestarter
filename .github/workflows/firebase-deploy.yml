@@ -18,10 +18,12 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Archive Production Artifact
-        uses: actions/upload-artifact@v3
+        - uses: actions/upload-artifact@v2
         with:
           name: dist
-          path: .
+          path: |
+            .
+            !./node_modules
   deploy:
     name: Deploy
     needs: build
