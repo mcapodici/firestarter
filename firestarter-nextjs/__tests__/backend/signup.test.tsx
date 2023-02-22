@@ -1,15 +1,21 @@
 import signup from '@/backend/Signup';
 import { AUTH_EMAIL_ALREADY_IN_USE, AUTH_INVALID_EMAIL, AUTH_OPERATION_NOT_ALLOWED, AUTH_WEAK_PASSWORD } from '@/firebase/errorCodes';
 import { FirebaseError } from '@firebase/util';
-import * as dep from 'firebase/auth';
 import { UserCredential } from 'firebase/auth';
 
 const createUserWithEmailAndPassword = jest.fn();
-jest.mock<Partial<typeof dep>>('firebase/auth',
+
+jest.mock('firebase/auth',
     () => ({
-        createUserWithEmailAndPassword: (...args) => createUserWithEmailAndPassword(...args)
+        createUserWithEmailAndPassword: (...args: any[]) => createUserWithEmailAndPassword(...args)
     }));
 
+const setDocMock = jest.fn();
+jest.mock('firebase/firestore',
+    () => ({
+        doc: () => null,
+        setDoc: (...args: any[]) => setDocMock(args)
+    }));
 
 describe('Signup Function', () => {
     beforeEach(() => {
@@ -19,8 +25,18 @@ describe('Signup Function', () => {
     it('Works with successful signup', async () => {
         const mockCredentials = { user: { uid: "123" } } as any as UserCredential;
         createUserWithEmailAndPassword.mockResolvedValue(mockCredentials);
+        setDocMock.mockResolvedValue(undefined);
         const result = await signup('ben@example.com', 'fred1234!', { firstName: 'ben', lastName: 'neb' });
         expect(result).toEqual({ result: 'success', uid: '123' });
+        expect(createUserWithEmailAndPassword).toBeCalledWith(undefined, 'ben@example.com', 'fred1234!');
+    });
+
+    it('Works with partial successful signup', async () => {
+        const mockCredentials = { user: { uid: "123" } } as any as UserCredential;
+        createUserWithEmailAndPassword.mockResolvedValue(mockCredentials);
+        setDocMock.mockRejectedValue('saving data about user is not working for some reason');
+        const result = await signup('ben@example.com', 'fred1234!', { firstName: 'ben', lastName: 'neb' });
+        expect(result).toEqual({ result: 'partial-success', uid: '123' });
         expect(createUserWithEmailAndPassword).toBeCalledWith(undefined, 'ben@example.com', 'fred1234!');
     });
 

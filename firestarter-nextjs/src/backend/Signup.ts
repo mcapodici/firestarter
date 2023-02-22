@@ -30,7 +30,7 @@ export default async function signup(email: string, password: string, data: ISig
 
     try {
         const userRef = doc(firestore, "users", credential.user.uid);
-        setDoc(userRef, data)
+        await setDoc(userRef, data)
     } catch (e: unknown) {
         return { result: 'partial-success', uid: credential.user.uid }
     }
