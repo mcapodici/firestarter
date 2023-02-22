@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@main
       - name: Install Dependencies
-      - run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile
       - name: Archive Production Artifact
         uses: actions/upload-artifact@v3
         with:
