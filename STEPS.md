@@ -66,3 +66,4 @@ NEXT_PUBLIC_FIREBASE_APPID
 Note that none of this configuration is secret, it will be available in the bundled JS.
 
 * Enable Auth in Firebase portal - just Email/Password for now.
+* Enable Firestore in Firebase portal - https://console.firebase.google.com/project/fire-starter-demo/firestore 
