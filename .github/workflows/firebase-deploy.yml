@@ -22,8 +22,8 @@ jobs:
         with:
           name: dist
           path: |
-            .
-            !./node_modules
+            firebase
+            !./firebase/node_modules
   deploy:
     name: Deploy
     needs: build
