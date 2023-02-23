@@ -17,11 +17,10 @@ type FormData = {
 export default function SignupForm({ onSignupClick }: Props) {
     const { register, handleSubmit, formState: { errors }, setError } = useForm<FormData>();
 
-
     const onSubmit = async ({ firstName, lastName, email, password }: FormData) => {
         const result = await onSignupClick(firstName, lastName, email, password);
-        if (result.result === 'success') {
-            // TODO - redirect to login
+        if (result.result === 'success' || result.result ==='partial-success') {
+            // TODO - redirect to login, with partial-success message if required
             return;
         }
 

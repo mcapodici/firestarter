@@ -1,0 +1,46 @@
+name: Deploy Firebase Rules and Functions
+on:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    working-directory: firebase
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@main
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: |
+            firebase
+            !./firebase/node_modules
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@main
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: .
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@v11.22.0
+        with:
+          args: deploy
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          PROJECT_ID: ${{ vars.PROJECT_ID }}
