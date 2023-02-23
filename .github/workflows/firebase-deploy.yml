@@ -28,6 +28,7 @@ jobs:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
+    environment: Production
     steps:
       - name: Checkout Repo
         uses: actions/checkout@main
