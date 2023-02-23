@@ -1,8 +1,8 @@
 name: Deploy Firebase Rules and Functions
 on:
   push:
-  #   branches:
-  #     - main
+    branches:
+      - main
 
 defaults:
   run:
