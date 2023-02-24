@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { match } from "ts-pattern";
 import { Alert } from "./Alert";
+import router from "next/router";
 
 type FormData = {
     firstName: string;
@@ -18,8 +19,9 @@ export default function SignupForm() {
 
     const onSubmit = async ({ firstName, lastName, email, password }: FormData) => {
         const result = await backend.signup(email, password, { firstName, lastName });
-        if (result.result === 'success' || result.result ==='partial-success') {
-            // TODO - redirect to login, with partial-success message if required
+
+        if (result.result === 'success' || result.result === 'partial-success') {
+            router.push({ pathname: '/login'});
             return;
         }
 
