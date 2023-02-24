@@ -4,6 +4,10 @@ import { Context } from '@/context/Context';
 import userEvent from "@testing-library/user-event";
 import { SignupResult } from '@/backend/IBackend';
 import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
+import mockRouter from 'next-router-mock';
+import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
+
+jest.mock('next/router', () => require('next-router-mock'));
 
 describe('Signup', () => {
 
@@ -18,7 +22,8 @@ describe('Signup', () => {
     render(
       <Context.Provider value={mockContext}>
         <Signup />
-      </Context.Provider>
+      </Context.Provider>,
+      { wrapper: MemoryRouterProvider }
     )
   });
 
@@ -54,10 +59,35 @@ describe('Signup', () => {
     expect(pw.attributes.getNamedItem('type')?.value).toBe('password');
   });
 
-  it('sends the submitted data to the signup service', async () => {
-    await fillInAllFieldsValid();
-    await user.click(screen.getByText('Sign up'));
-    expect(mockContext.backend.signup).toBeCalledWith("me@them.com", "password123", { firstName: 'Ben', lastName: 'Neb' });
+  describe('on valid input submission', () => {
+    describe('with success response', () => {
+      beforeEach(async () => {
+        mockContext.backend.signup.mockResolvedValue({ result: 'success', uid: '123' });
+        await fillInAllFieldsValid();
+        await user.click(screen.getByText('Sign up'));
+      })
+      it('sends the submitted data to the signup service', async () => {
+        expect(mockContext.backend.signup).toBeCalledWith("me@them.com", "password123", { firstName: 'Ben', lastName: 'Neb' });
+      });
+      it('redirects to the login page', async () => {
+        expect(mockRouter.asPath).toEqual('/login');
+
+      });
+    });
+    
+    describe('with partial success response', () => {
+      beforeEach(async () => {
+        mockContext.backend.signup.mockResolvedValue({ result: 'partial-success', uid: '123' });
+        await fillInAllFieldsValid();
+        await user.click(screen.getByText('Sign up'));
+      })
+      it ('sends the submitted data to the signup service', async () => {
+        expect(mockContext.backend.signup).toBeCalledWith("me@them.com", "password123", { firstName: 'Ben', lastName: 'Neb' });
+      });
+      it ('redirects to the login page', async () => {
+        expect(mockRouter.asPath).toEqual('/login');
+      });
+    });  
   });
 
   it('validates the first name exists', async () => {
