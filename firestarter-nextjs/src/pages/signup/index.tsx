@@ -1,10 +1,7 @@
 import SignupForm from '@/components/SignupForm'
 import Layout from '@/components/Layout'
-import { useContext, useState } from 'react';
-import { Context } from '@/context/Context';
 
 export default function Signup() {
-  const { backend } = useContext(Context);
   return (
     <>
       <Layout>
@@ -13,10 +10,7 @@ export default function Signup() {
           <h3 className="text-3xl font-bold mb-8">Sign up for free now!</h3>
         </div>
         <div className="m-auto max-w-md">
-          <SignupForm onSignupClick={async (firstName, lastName, email, password) => {
-            const signupResult = await backend.signup(email, password, { firstName, lastName });
-            return signupResult;
-          }} />
+          <SignupForm />
         </div>
       </Layout>
     </>
