@@ -1,11 +1,9 @@
 import { SignupResult } from "@/backend/IBackend";
+import { Context } from "@/context/Context";
+import { useContext } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { match } from "ts-pattern";
 import { Alert } from "./Alert";
-
-interface Props {
-    onSignupClick: (firstName: string, lastName: string, email: string, password: string) => Promise<SignupResult>;
-}
 
 type FormData = {
     firstName: string;
@@ -14,11 +12,12 @@ type FormData = {
     password: string;
 };
 
-export default function SignupForm({ onSignupClick }: Props) {
+export default function SignupForm() {
     const { register, handleSubmit, formState: { errors }, setError } = useForm<FormData>();
+    const { backend } = useContext(Context);
 
     const onSubmit = async ({ firstName, lastName, email, password }: FormData) => {
-        const result = await onSignupClick(firstName, lastName, email, password);
+        const result = await backend.signup(email, password, { firstName, lastName });
         if (result.result === 'success' || result.result ==='partial-success') {
             // TODO - redirect to login, with partial-success message if required
             return;
