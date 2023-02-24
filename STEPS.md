@@ -67,3 +67,9 @@ Note that none of this configuration is secret, it will be available in the bund
 
 * Enable Auth in Firebase portal - just Email/Password for now.
 * Enable Firestore in Firebase portal - https://console.firebase.google.com/project/fire-starter-demo/firestore 
+
+Github Firebase Deployment Integration
+
+* Added permissions to project IAM role for Firebase Rules Admin and Service Account User (see https://github.com/marketplace/actions/github-action-for-firebase?version=v11.22.0)
+* Added environment secret GCP_SA_KEY and environment variable PROJECT_ID as per (see https://github.com/marketplace/actions/github-action-for-firebase?version=v11.22.0)
+
