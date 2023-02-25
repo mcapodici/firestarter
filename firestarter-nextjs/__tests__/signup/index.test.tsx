@@ -1,21 +1,17 @@
 import { render, screen } from '@testing-library/react'
-import Signup from '@/pages/signup';
 import { Context } from '@/context/Context';
 import userEvent from "@testing-library/user-event";
-import { SignupResult } from '@/backend/IBackend';
 import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 import mockRouter from 'next-router-mock';
 import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
+import { makeMockContext } from '__tests__/util/mockContext';
+import Signup from '@/pages/signup';
 
 jest.mock('next/router', () => require('next-router-mock'));
 
 describe('Signup', () => {
 
-  const mockContext = {
-    backend: { signup: jest.fn() },
-    toasts: [],
-    addToast: jest.fn()
-  };
+  const mockContext = makeMockContext();
 
   let user: UserEvent;
 

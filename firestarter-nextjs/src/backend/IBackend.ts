@@ -18,6 +18,8 @@ export type SignupResult =
     SignupFailEmailIsInUse |
     SignupFailInvalidEmail;
 
+export type LoginResult = 'success' | 'user-not-found' | 'wrong-password' | 'user-disabled' | 'fail';
+
 export interface ISignupData {
     firstName?: string;
     lastName?: string;
@@ -25,4 +27,5 @@ export interface ISignupData {
 
 export interface IBackend {
     signup(email: string, password: string, data: ISignupData): Promise<SignupResult>;
+    login(email: string, password: string): Promise<LoginResult>;
 }
