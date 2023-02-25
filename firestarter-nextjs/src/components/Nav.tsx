@@ -20,9 +20,9 @@ export default function Nav() {
             <path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" />
           </svg>
         </button>
-        <a className="text-blue-600 mr-2" href="/">
+        <Link className="text-blue-600 mr-2" href="/">
           <Image src="/logo.png" alt="Logo" height={24} width={24} />
-        </a>
+        </Link>
       </div>
       <div className={`${expandedNav ? '' : 'hidden'} lg:block grow items-center basis-full lg:basis-0`}  id="navigationItems">
         <ul className="mr-auto lg:flex lg:flex-row">
