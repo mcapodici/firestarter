@@ -16,8 +16,10 @@ const customJestConfig = {
     '^@/firebase/(.*)$': '<rootDir>/src/firebase/$1',
     '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@/common/(.*)$': '<rootDir>/src/common/$1',
+    '^__tests__/(.*$)': '<rootDir>/__tests__/$1'
   },
   testEnvironment: 'jest-environment-jsdom',
+  testPathIgnorePatterns: ['/util']
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

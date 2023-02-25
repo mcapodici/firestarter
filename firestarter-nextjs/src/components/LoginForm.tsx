@@ -15,8 +15,19 @@ export default function LoginForm() {
     const { addToast, backend } = useContext(Context);
 
     const onSubmit = async ({ email, password }: FormData) => {
+        const result = await backend.login(email, password);
 
-      
+        if (result === 'success') {
+            addToast('You are now logged in.', 'success');
+            router.push('/');
+            return;
+        }
+
+        match(result)
+            .with('user-disabled', () => setError('root.serverError', { message: 'Your login has been disabled. Please contact support for assistance.' }))
+            .with('user-not-found', () => setError('email', { message: 'No user exists with this email' }))
+            .with('wrong-password', () => setError('password', { message: 'Password is incorrect' }))
+            .otherwise(() => setError('root.serverError', { message: "Sorry there was a server problem while logging in, please try again later." }));
     };
 
     const fieldErrorAlertMsg = (err: FieldError | undefined) => err && <div className="mt-2"><Alert level="danger">{err.message}</Alert></div>;
@@ -31,7 +42,7 @@ export default function LoginForm() {
                 <input {...register("password", { required: "Password is required" })} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
                 {fieldErrorAlertMsg(errors.password)}
             </div>
-            <button type="submit" className={signupButtonClasses}>Sign up</button>
+            <button type="submit" className={signupButtonClasses}>Log in</button>
 
             {errors.root?.serverError && <div className="mt-2"><Alert level="danger">{errors.root.serverError.message}</Alert></div>}
         </form>
