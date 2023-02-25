@@ -15,6 +15,7 @@ const customJestConfig = {
     '^@/backend/(.*)$': '<rootDir>/src/backend/$1',
     '^@/firebase/(.*)$': '<rootDir>/src/firebase/$1',
     '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
+    '^@/common/(.*)$': '<rootDir>/src/common/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
 }

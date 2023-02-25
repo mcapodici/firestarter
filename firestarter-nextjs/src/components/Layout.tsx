@@ -1,6 +1,8 @@
+import { Context } from '@/context/Context';
 import Head from 'next/head';
-import React from 'react';
+import React, { useContext } from 'react';
 import Nav from './Nav';
+import { Toasts } from './Toasts';
 
 interface Props {
     children: React.ReactNode;
@@ -8,6 +10,8 @@ interface Props {
 
 
 export default function Layout(props: Props) {
+
+    const {toasts} = useContext(Context);
     return <>
         <Head>
             <title>Firestarter!</title>
@@ -18,6 +22,8 @@ export default function Layout(props: Props) {
         <main>
             <section className="mb-40">
                 <Nav />
+                <div className='m-1'>
+                <Toasts toasts={toasts} /></div>
                 {props.children}
             </section>
         </main>

@@ -1,13 +1,12 @@
 import { Backend } from "@/backend/Backend";
 import { IBackend } from "@/backend/IBackend";
+import { Toast, ToastAdder } from "@/components/Toasts";
 import React from "react";
 
 export interface ContextInterface {
     backend: IBackend;
+    toasts: Toast[];
+    addToast: ToastAdder;
 }
 
-const backend = new Backend();
-
-export const Context = React.createContext<ContextInterface>({
-    backend
-});
+export const Context = React.createContext<ContextInterface>({} as any);

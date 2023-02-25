@@ -12,7 +12,9 @@ jest.mock('next/router', () => require('next-router-mock'));
 describe('Signup', () => {
 
   const mockContext = {
-    backend: { signup: jest.fn(async (u: string, p: string) => ({ result: 'fail' } as SignupResult)) }
+    backend: { signup: jest.fn() },
+    toasts: [],
+    addToast: jest.fn()
   };
 
   let user: UserEvent;
@@ -71,7 +73,10 @@ describe('Signup', () => {
       });
       it('redirects to the login page', async () => {
         expect(mockRouter.asPath).toEqual('/login');
-
+      });
+      it('shows success alert', async () => {
+        expect(mockContext.addToast).toBeCalledTimes(1);
+        expect(mockContext.addToast).toBeCalledWith('Your account has been created. You can now log in.', 'success');
       });
     });
     
@@ -86,6 +91,10 @@ describe('Signup', () => {
       });
       it ('redirects to the login page', async () => {
         expect(mockRouter.asPath).toEqual('/login');
+      });
+      it('shows partial success alert', async () => {
+        expect(mockContext.addToast).toBeCalledTimes(1);
+        expect(mockContext.addToast).toBeCalledWith('Your account has been created, there was an issue trying to save your name to the profile, so you will need to do this again. You can now log in.', 'warning');
       });
     });  
   });
