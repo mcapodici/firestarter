@@ -6,6 +6,7 @@ import { initFirebase } from '@/firebase/config';
 import { useToasts } from '@/components/Toasts';
 import { Context } from '@/context/Context';
 import { Backend } from '@/backend/Backend';
+import { AlertLevel } from '@/components/Alert';
 
 const backend = new Backend();
 
@@ -26,8 +27,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const [toasts, addToast] = useToasts();
 
-  const addToastThenScroll = (message: string, tag?: string, removeOthersWithTag?: boolean) => {
-    addToast(message, tag, removeOthersWithTag);
+  const addToastThenScroll = (message: string, level?: AlertLevel, tag?: string, removeOthersWithTag?: boolean) => {
+    addToast(message, level, tag, removeOthersWithTag);
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 
