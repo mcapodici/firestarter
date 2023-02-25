@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tailwind */
+
+.anchor {
+   @apply underline text-blue-600
+}
+.anchor:hover {
+   @apply text-blue-800
+}
+.anchor:visited:visited {
+   @apply text-purple-600
+}
