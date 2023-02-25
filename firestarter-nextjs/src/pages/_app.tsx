@@ -3,6 +3,11 @@ import type { AppProps } from 'next/app'
 import '../styles/index.css'
 import { useEffect } from 'react';
 import { initFirebase } from '@/firebase/config';
+import { useToasts } from '@/components/Toasts';
+import { Context } from '@/context/Context';
+import { Backend } from '@/backend/Backend';
+
+const backend = new Backend();
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -19,5 +24,14 @@ export default function App({ Component, pageProps }: AppProps) {
     initFirebase();
   }, []);
 
-  return <Component {...pageProps} />
+  const [toasts, addToast] = useToasts();
+
+  const addToastThenScroll = (message: string, tag?: string, removeOthersWithTag?: boolean) => {
+    addToast(message, tag, removeOthersWithTag);
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }
+
+  return <Context.Provider value={{ backend, toasts, addToast: addToastThenScroll }}>
+    <Component {...pageProps} />
+  </Context.Provider>
 }

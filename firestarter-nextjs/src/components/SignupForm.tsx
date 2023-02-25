@@ -1,4 +1,3 @@
-import { SignupResult } from "@/backend/IBackend";
 import { Context } from "@/context/Context";
 import { useContext } from "react";
 import { FieldError, useForm } from "react-hook-form";
@@ -15,13 +14,19 @@ type FormData = {
 
 export default function SignupForm() {
     const { register, handleSubmit, formState: { errors }, setError } = useForm<FormData>();
-    const { backend } = useContext(Context);
+    const { addToast, backend } = useContext(Context);
 
     const onSubmit = async ({ firstName, lastName, email, password }: FormData) => {
+
         const result = await backend.signup(email, password, { firstName, lastName });
 
         if (result.result === 'success' || result.result === 'partial-success') {
-            router.push({ pathname: '/login'});
+            if (result.result === 'success') {
+                addToast('Your account has been created. You can now log in.', 'success');
+            } else {
+                addToast('Your account has been created, there was an issue trying to save your name to the profile, so you will need to do this again. You can now log in.', 'warning');
+            }
+            router.push({ pathname: '/login' });
             return;
         }
 
@@ -42,7 +47,7 @@ export default function SignupForm() {
                     {fieldErrorAlertMsg(errors.firstName)}
                 </div>
                 <div className="form-group mb-6">
-                    <input {...register("lastName", { required: "Last name is required" })}  type="text" className={inputClasses} aria-describedby="Last name" placeholder="Last name" />
+                    <input {...register("lastName", { required: "Last name is required" })} type="text" className={inputClasses} aria-describedby="Last name" placeholder="Last name" />
                     {fieldErrorAlertMsg(errors.lastName)}
                 </div>
             </div>

@@ -1,13 +1,14 @@
-
-
-
 interface Props {
-    level: 'danger';
+    level: AlertLevel;
     children: React.ReactNode;
 }
 
+export type AlertLevel = keyof typeof styles;
+
 const styles = {
-    danger: 'bg-red-100 text-red-700'
+    danger: 'bg-red-100 text-red-700',
+    warning: 'bg-orange-100 text-orange-700',
+    success: 'bg-green-100 text-green-700',
 }
 
 export function Alert({ level, children }: Props) {
