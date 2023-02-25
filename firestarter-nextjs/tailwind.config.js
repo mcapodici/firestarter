@@ -8,7 +8,6 @@ module.exports = {
     aspectRatio: false,
   },
   plugins: [
-    require('tw-elements/dist/plugin'),
     require('@tailwindcss/aspect-ratio')
   ]
 }
