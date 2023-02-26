@@ -41,7 +41,7 @@ describe('Login', () => {
   }
 
   async function submitFormAndCheckAlertText(expectedAlert: string) {
-    await user.click( screen.getByRole('button', { name: /Log in/i }));
+    await user.click(screen.getByRole('button', { name: /Log in/i }));
     const alerts = await screen.findAllByRole("alert");
     expect(alerts).toHaveLength(1);
     expect(alerts[0]).toHaveTextContent(expectedAlert);
@@ -58,9 +58,9 @@ describe('Login', () => {
   describe('on valid input submission', () => {
     describe('with success response', () => {
       beforeEach(async () => {
-        mockContext.backend.login.mockResolvedValue('success');
+        mockContext.backend.login.mockResolvedValue({ result: 'success' });
         await fillInAllFieldsValid();
-        await user.click( screen.getByRole('button', { name: /Log in/i }));
+        await user.click(screen.getByRole('button', { name: /Log in/i }));
       })
       it('sends the submitted data to the signup service', async () => {
         expect(mockContext.backend.login).toBeCalledWith("me@them.com", "password123");
@@ -99,25 +99,25 @@ describe('Login', () => {
 
   describe('handles firebase error return code', () => {
     it('user-not-found', async () => {
-      mockContext.backend.login.mockResolvedValue('user-not-found');
+      mockContext.backend.login.mockResolvedValue({ result: 'user-not-found' });
       await fillInAllFieldsValid();
       await submitFormAndCheckAlertText('No user exists with this email');
     });
 
     it('wrong-password', async () => {
-      mockContext.backend.login.mockResolvedValue('wrong-password');
+      mockContext.backend.login.mockResolvedValue({ result: 'wrong-password' });
       await fillInAllFieldsValid();
       await submitFormAndCheckAlertText('Password is incorrect');
     });
 
     it('user-disabled', async () => {
-      mockContext.backend.login.mockResolvedValue('user-disabled');
+      mockContext.backend.login.mockResolvedValue({ result: 'user-disabled' });
       await fillInAllFieldsValid();
       await submitFormAndCheckAlertText('Your login has been disabled. Please contact support for assistance.');
     });
 
     it('fail', async () => {
-      mockContext.backend.login.mockResolvedValue('fail');
+      mockContext.backend.login.mockResolvedValue({ result: 'fail' });
       await fillInAllFieldsValid();
       await submitFormAndCheckAlertText("Sorry there was a server problem while logging in, please try again later.");
     });

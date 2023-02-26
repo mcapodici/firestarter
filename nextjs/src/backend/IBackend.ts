@@ -18,7 +18,12 @@ export type SignupResult =
     SignupFailEmailIsInUse |
     SignupFailInvalidEmail;
 
-export type LoginResult = 'success' | 'user-not-found' | 'wrong-password' | 'user-disabled' | 'fail';
+export type LoginResult =
+    { result: 'success', uid: string } |
+    { result: 'user-not-found' } |
+    { result: 'wrong-password' } |
+    { result: 'user-disabled' } |
+    { result: 'fail', message: string };
 
 export interface ISignupData {
     firstName?: string;

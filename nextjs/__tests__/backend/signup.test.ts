@@ -1,9 +1,10 @@
-import signup from '@/backend/Signup';
+import { Backend } from '@/backend/Backend';
 import { AUTH_EMAIL_ALREADY_IN_USE, AUTH_INVALID_EMAIL, AUTH_OPERATION_NOT_ALLOWED, AUTH_WEAK_PASSWORD } from '@/firebase/errorCodes';
 import { FirebaseError } from '@firebase/util';
 import { UserCredential } from 'firebase/auth';
 
 const createUserWithEmailAndPassword = jest.fn();
+const signup = new Backend().signup;
 
 jest.mock('firebase/auth',
     () => ({
