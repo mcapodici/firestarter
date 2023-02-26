@@ -1,11 +1,11 @@
-name: Tests (firestarter-nextjs)
+name: Tests (nextjs)
 
 on:
   push:
 
 defaults:
   run:
-    working-directory: firestarter-nextjs
+    working-directory: nextjs
 
 jobs:
   build:
