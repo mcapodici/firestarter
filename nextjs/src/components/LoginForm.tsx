@@ -17,13 +17,13 @@ export default function LoginForm() {
     const onSubmit = async ({ email, password }: FormData) => {
         const result = await backend.login(email, password);
 
-        if (result === 'success') {
+        if (result.result === 'success') {
             addToast('You are now logged in.', 'success');
             router.push('/');
             return;
         }
 
-        match(result)
+        match(result.result)
             .with('user-disabled', () => setError('root.serverError', { message: 'Your login has been disabled. Please contact support for assistance.' }))
             .with('user-not-found', () => setError('email', { message: 'No user exists with this email' }))
             .with('wrong-password', () => setError('password', { message: 'Password is incorrect' }))
