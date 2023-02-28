@@ -34,15 +34,17 @@ export default function LoginForm() {
 
     return <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-group mb-6">
+            <div className="mb-6">
                 <input {...register("email", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="text" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
                 {fieldErrorAlertMsg(errors.email)}
             </div>
-            <div className="form-group mb-6">
+            <div className="mb-6">
                 <input {...register("password", { required: "Password is required" })} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
                 {fieldErrorAlertMsg(errors.password)}
             </div>
             <button type="submit" className={signupButtonClasses}>Log in</button>
+            <div className="mb-6">
+            </div>
 
             {errors.root?.serverError && <div className="mt-2"><Alert level="danger">{errors.root.serverError.message}</Alert></div>}
         </form>
