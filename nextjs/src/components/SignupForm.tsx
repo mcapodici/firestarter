@@ -42,20 +42,20 @@ export default function SignupForm() {
     return <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid md:grid-cols-2 md:gap-4">
-                <div className="form-group mb-6">
+                <div className="mb-6">
                     <input {...register("firstName", { required: "First name is required" })} type="text" className={inputClasses} aria-describedby="First name" placeholder="First name" />
                     {fieldErrorAlertMsg(errors.firstName)}
                 </div>
-                <div className="form-group mb-6">
+                <div className="mb-6">
                     <input {...register("lastName", { required: "Last name is required" })} type="text" className={inputClasses} aria-describedby="Last name" placeholder="Last name" />
                     {fieldErrorAlertMsg(errors.lastName)}
                 </div>
             </div>
-            <div className="form-group mb-6">
+            <div className="mb-6">
                 <input {...register("email", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="text" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
                 {fieldErrorAlertMsg(errors.email)}
             </div>
-            <div className="form-group mb-6">
+            <div className="mb-6">
                 <input {...register("password", { required: "Password is required" })} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
                 {fieldErrorAlertMsg(errors.password)}
             </div>
