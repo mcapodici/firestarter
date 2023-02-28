@@ -39,5 +39,5 @@ export interface ISignupData {
 export interface IBackend {
     signup(email: string, password: string, data: ISignupData): Promise<SignupResult>;
     login(email: string, password: string): Promise<LoginResult>;
-    doResetPassword(email: string): Promise<PasswordResetResult>;
+    resetPassword(email: string): Promise<PasswordResetResult>;
 }

@@ -10,7 +10,7 @@ export class Backend implements IBackend {
     async signup(email: string, password: string, data: ISignupData): Promise<SignupResult> {
         return await doSignUp(email, password, data);
     }
-    async doResetPassword(email: string): Promise<PasswordResetResult> {
+    async resetPassword(email: string): Promise<PasswordResetResult> {
         return await doResetPassword(email);
     }
 }
