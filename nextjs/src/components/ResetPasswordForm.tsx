@@ -4,31 +4,27 @@ import { FieldError, useForm } from "react-hook-form";
 import { match } from "ts-pattern";
 import { Alert } from "./Alert";
 import router from "next/router";
-import Link from "next/link";
 
 type FormData = {
     email: string;
     password: string;
 };
 
-export default function LoginForm() {
+export default function ResetPasswordForm() {
     const { register, handleSubmit, formState: { errors }, setError } = useForm<FormData>();
     const { addToast, backend } = useContext(Context);
 
-    const onSubmit = async ({ email, password }: FormData) => {
-        const result = await backend.login(email, password);
+    const onSubmit = async ({ email }: FormData) => {
+        const result = await backend.resetPassword(email);
 
         if (result.result === 'success') {
-            addToast('You are now logged in.', 'success');
-            router.push('/');
+            addToast('Your password reset link has been sent.', 'success');
             return;
         }
 
         match(result.result)
-            .with('user-disabled', () => setError('root.serverError', { message: 'Your login has been disabled. Please contact support for assistance.' }))
             .with('user-not-found', () => setError('email', { message: 'No user exists with this email' }))
-            .with('wrong-password', () => setError('password', { message: 'Password is incorrect' }))
-            .otherwise(() => setError('root.serverError', { message: "Sorry there was a server problem while logging in, please try again later." }));
+            .otherwise(() => setError('root.serverError', { message: "Sorry there was a server problem while resetting the password, please try again later." }));
     };
 
     const fieldErrorAlertMsg = (err: FieldError | undefined) => err && <div className="mt-2"><Alert level="danger">{err.message}</Alert></div>;
@@ -39,14 +35,7 @@ export default function LoginForm() {
                 <input {...register("email", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="text" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
                 {fieldErrorAlertMsg(errors.email)}
             </div>
-            <div className="mb-6">
-                <input {...register("password", { required: "Password is required" })} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
-                {fieldErrorAlertMsg(errors.password)}
-            </div>
-            <button type="submit" className={signupButtonClasses}>Log in</button>
-            <div className="mb-6 pt-10 text-center">
-                <Link className="anchor" href="/resetpassword">Click here</Link> to reset your password.
-            </div>
+            <button type="submit" className={signupButtonClasses}>Send Reset Password Link</button>
             {errors.root?.serverError && <div className="mt-2"><Alert level="danger">{errors.root.serverError.message}</Alert></div>}
         </form>
     </div>;
