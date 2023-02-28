@@ -4,9 +4,9 @@ import { PasswordResetResult } from "./IBackend";
 import { auth } from "@/firebase/config";
 import { AUTH_INVALID_EMAIL, AUTH_USER_NOT_FOUND } from "@/firebase/errorCodes";
 
-export default async function doResetPassword(email: string, url: string): Promise<PasswordResetResult> {
+export default async function doResetPassword(email: string): Promise<PasswordResetResult> {
     try {
-        await sendPasswordResetEmail(auth, email, { url });
+        await sendPasswordResetEmail(auth, email);
     } catch (e: unknown) {
         if (!(e instanceof FirebaseError)) {
             return { result: 'fail', message: '' }
