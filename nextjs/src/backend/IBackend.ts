@@ -25,6 +25,12 @@ export type LoginResult =
     { result: 'user-disabled' } |
     { result: 'fail', message: string };
 
+export type PasswordResetResult =
+    { result: 'success' } |
+    { result: 'user-not-found' } |
+    { result: 'fail', message: string };
+
+
 export interface ISignupData {
     firstName?: string;
     lastName?: string;
