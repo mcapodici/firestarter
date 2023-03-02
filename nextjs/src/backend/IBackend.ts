@@ -25,6 +25,12 @@ export type LoginResult =
     { result: 'user-disabled' } |
     { result: 'fail', message: string };
 
+export type PasswordResetResult =
+    { result: 'success' } |
+    { result: 'user-not-found' } |
+    { result: 'fail', message: string };
+
+
 export interface ISignupData {
     firstName?: string;
     lastName?: string;
@@ -33,4 +39,5 @@ export interface ISignupData {
 export interface IBackend {
     signup(email: string, password: string, data: ISignupData): Promise<SignupResult>;
     login(email: string, password: string): Promise<LoginResult>;
+    resetPassword(email: string): Promise<PasswordResetResult>;
 }
