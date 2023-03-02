@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { match } from "ts-pattern";
 import { Alert } from "./Alert";
-import router from "next/router";
 
 type FormData = {
     email: string;
