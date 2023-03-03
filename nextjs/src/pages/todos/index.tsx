@@ -8,7 +8,7 @@ export default function Todos() {
         <div className="m-auto max-w-md mt-20 text-center">
           <h1 className="text-5xl font-bold pb-2 mt-0 mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-black">Todos</h1>
         </div>
-        <div className="m-auto max-w-5xl m-2">
+        <div className="m-auto max-w-5xl p-2">
           <table className="min-w-full text-left text-sm font-light">
             <thead className="border-b font-medium dark:border-neutral-500">
               <tr>
