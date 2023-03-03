@@ -34,30 +34,11 @@ export default function ResetPasswordForm() {
                 <input {...register("email", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="text" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
                 {fieldErrorAlertMsg(errors.email)}
             </div>
-            <button type="submit" className={signupButtonClasses}>Send Reset Password Link</button>
+            <button type="submit" className="button blue w-full">Send Reset Password Link</button>
             {errors.root?.serverError && <div className="mt-2"><Alert level="danger">{errors.root.serverError.message}</Alert></div>}
         </form>
     </div>;
 }
-
-
-const signupButtonClasses = `w-full
-px-6
-py-2.5
-bg-blue-600
-text-white
-font-medium
-text-xs
-leading-tight
-uppercase
-rounded
-shadow-md
-hover:bg-blue-700 hover:shadow-lg
-focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-active:bg-blue-800 active:shadow-lg
-transition
-duration-150
-ease-in-out`;
 
 const inputClasses = `form-control
 block

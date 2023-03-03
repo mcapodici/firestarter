@@ -43,7 +43,7 @@ export default function LoginForm() {
                 <input {...register("password", { required: "Password is required" })} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
                 {fieldErrorAlertMsg(errors.password)}
             </div>
-            <button type="submit" className={signupButtonClasses}>Log in</button>
+            <button type="submit" className="button blue w-full">Log in</button>
             <div className="mb-6 pt-10 text-center">
                 <Link className="anchor" href="/resetpassword">Click here</Link> to reset your password.
             </div>
@@ -51,25 +51,6 @@ export default function LoginForm() {
         </form>
     </div>;
 }
-
-
-const signupButtonClasses = `w-full
-px-6
-py-2.5
-bg-blue-600
-text-white
-font-medium
-text-xs
-leading-tight
-uppercase
-rounded
-shadow-md
-hover:bg-blue-700 hover:shadow-lg
-focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-active:bg-blue-800 active:shadow-lg
-transition
-duration-150
-ease-in-out`;
 
 const inputClasses = `form-control
 block

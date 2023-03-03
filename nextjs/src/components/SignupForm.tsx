@@ -59,31 +59,12 @@ export default function SignupForm() {
                 <input {...register("password", { required: "Password is required" })} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
                 {fieldErrorAlertMsg(errors.password)}
             </div>
-            <button type="submit" className={signupButtonClasses}>Sign up</button>
+            <button type="submit" className="button blue w-full">Sign up</button>
 
             {errors.root?.serverError && <div className="mt-2"><Alert level="danger">{errors.root.serverError.message}</Alert></div>}
         </form>
     </div>;
 }
-
-
-const signupButtonClasses = `w-full
-px-6
-py-2.5
-bg-blue-600
-text-white
-font-medium
-text-xs
-leading-tight
-uppercase
-rounded
-shadow-md
-hover:bg-blue-700 hover:shadow-lg
-focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-active:bg-blue-800 active:shadow-lg
-transition
-duration-150
-ease-in-out`;
 
 const inputClasses = `form-control
 block
