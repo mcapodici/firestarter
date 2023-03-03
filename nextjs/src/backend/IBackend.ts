@@ -1,15 +1,15 @@
 export type SignupResult =
-{ result: 'success', uid: string } |
+    { result: 'success', uid: string } |
 
-/**
- * Represents success in creating user, but a failure to store user data
- */
-{ result: 'partial-success', uid: string } |
-{ result: 'fail', message: string } |
-{ result: 'weak-password' } |
-{ result: 'accounts-not-enabled' } |
-{ result: 'email-in-use' } |
-{ result: 'invalid-email' };
+    /**
+     * Represents success in creating user, but a failure to store user data
+     */
+    { result: 'partial-success', uid: string } |
+    { result: 'fail', message: string } |
+    { result: 'weak-password' } |
+    { result: 'accounts-not-enabled' } |
+    { result: 'email-in-use' } |
+    { result: 'invalid-email' };
 
 export type LoginResult =
     { result: 'success', uid: string } |
