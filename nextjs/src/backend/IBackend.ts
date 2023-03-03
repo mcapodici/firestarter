@@ -23,14 +23,28 @@ export type PasswordResetResult =
     { result: 'user-not-found' } |
     { result: 'fail', message: string };
 
+export type AddResult =
+    { result: 'success' } |
+    { result: 'fail', message: string };
+
+export type GetListResult<T> =
+    { result: 'success', items: T[] } |
+    { result: 'fail', message: string };
 
 export interface ISignupData {
     firstName?: string;
     lastName?: string;
 }
 
+export interface Todo {
+    title: string;
+    done: boolean;
+}
+
 export interface IBackend {
     signup(email: string, password: string, data: ISignupData): Promise<SignupResult>;
     login(email: string, password: string): Promise<LoginResult>;
     resetPassword(email: string): Promise<PasswordResetResult>;
+    addTodo(uid: string, title: string): Promise<AddResult>;
+    getTodos(uid: string): Promise<GetListResult<Todo>>
 }
