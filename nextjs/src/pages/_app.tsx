@@ -7,6 +7,7 @@ import { useToasts } from '@/components/Toasts';
 import { Context } from '@/context/Context';
 import { Backend } from '@/backend/Backend';
 import { AlertLevel } from '@/components/Alert';
+import useAuthState from '@/auth/useAuthState';
 
 const backend = new Backend();
 
@@ -19,12 +20,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const [toasts, addToast] = useToasts();
 
+  const [user, authLoading, authError] = useAuthState();
+
   const addToastThenScroll = (message: string, level?: AlertLevel, tag?: string, removeOthersWithTag?: boolean) => {
     addToast(message, level, tag, removeOthersWithTag);
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 
-  return <Context.Provider value={{ backend, toasts, addToast: addToastThenScroll }}>
+  return <Context.Provider value={{ backend, toasts, addToast: addToastThenScroll, user }}>
     <Component {...pageProps} />
   </Context.Provider>
 }

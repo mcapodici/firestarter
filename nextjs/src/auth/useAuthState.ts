@@ -9,19 +9,19 @@ import { useEffect, useMemo, useState } from 'react';
  */
 export declare type LoadingHook<T, E> = [T | undefined, boolean, E | undefined];
 
-export type AuthStateHook = LoadingHook<User | null, Error>;
+export type AuthStateHook = LoadingHook<User, Error>;
 
 const useAuthState = (): AuthStateHook => {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | undefined>();
-    const [value, setValue] = useState<User | null | undefined>();
+    const [value, setValue] = useState<User | undefined>();
 
     useEffect(() => {
         const listener = onAuthStateChanged(
             auth,
             async (user) => {
-                setValue(user);
+                setValue(user || undefined);
                 setLoading(false);
             },
             setError
