@@ -39,6 +39,7 @@ export interface ISignupData {
 export interface Todo {
     title: string;
     done: boolean;
+    uid: string;
 }
 
 export interface IBackend {

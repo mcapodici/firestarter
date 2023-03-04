@@ -14,6 +14,16 @@ service cloud.firestore {
             user.lastName.size() < 100
     }
 
+    function validateTodo(todo) {
+        return todo.keys().hasAll(['uid', 'title', 'done']) &&
+            todo.uid is string &&
+            todo.title is string &&
+            todo.done is bool &&
+            todo.uid.size() > 0 &&
+            todo.title.size() > 0 &&
+            todo.title.size() < 100
+    }
+
     match /databases/{database}/documents {
         match /users/{userId} {         
             // Allow users to read their own profile (doc id same as user id)
@@ -23,6 +33,7 @@ service cloud.firestore {
 
         match /todo/{todo} {
             allow read: if request.auth != null && request.auth.uid == resource.data.uid;
+            allow write: if request.auth != null && request.auth.uid == request.resource.data.uid && validateTodo(request.resource.data);
         }
     }
 } 

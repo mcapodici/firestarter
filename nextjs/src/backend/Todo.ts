@@ -1,16 +1,30 @@
 import { firestore } from "@/firebase/config";
-import { collection, CollectionReference, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection, CollectionReference, getDocs, query, where } from "firebase/firestore";
 import { AddResult, GetListResult, Todo } from "./IBackend";
 
 const TodoCollectionName = 'todo';
 
+function todoCollection() {
+    return collection(firestore, TodoCollectionName) as CollectionReference<Todo>;
+}
+
 export async function addTodo(uid: string, title: string): Promise<AddResult> {
-    throw new Error("Method not implemented.");
+    try {
+        await addDoc(todoCollection(), { uid, title, done: false });
+        return { result: 'success' };
+    } catch (e: any) {
+        console.log(e);
+        console.log({ uid, title, done: false })
+        if (e instanceof Error) {
+            return { result: 'fail', message: e.message };
+        }
+        return { result: 'fail', message: '' };
+    }
 }
 
 export async function getTodos(uid: string): Promise<GetListResult<Todo>> {
     try {
-        const q = query(collection(firestore, TodoCollectionName) as CollectionReference<Todo>,
+        const q = query(todoCollection(),
             where("uid", "==", uid)
         );
         const docs = (await getDocs(q)).docs.map(d => d.data());

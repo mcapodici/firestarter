@@ -13,20 +13,27 @@ type FormData = {
 
 export default function Todos() {
 
-  const { register, handleSubmit, formState: { errors }, setError } = useForm<FormData>();
-  const { user, backend } = useContext(Context);
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
+  const { user, backend, addToast } = useContext(Context);
 
   const [todos, setTodos] = useState<Todo[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
 
   const onSubmit = async ({ title }: FormData) => {
-  };
+    if (user) {
+      const addTodoResult = await backend.addTodo(user.uid, title);
+      if (addTodoResult.result === 'success') {
+        todos.push({ title, done: false, uid: user.uid });
+        reset();
+      } else {
+        addToast('Sorry the todo was not added, there was a problem connecting to the server.', 'danger');
+      }
+    };
+  }
 
   useEffect(() => {
-    console.log('user', user);
     if (user) {
       backend.getTodos(user.uid).then((todos) => {
-        console.log(todos);
         if (todos.result === 'success') {
           setTodos(todos.items);
         } else {
@@ -60,7 +67,7 @@ export default function Todos() {
       <div className="mt-10 text-center">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-2">
-            <input {...register("title", { required: "Title is required" })} type="text" className="input" aria-describedby="Title" placeholder="E.g. buy shoelaces" />
+            <input maxLength={100} {...register("title", { required: "Title is required" })} type="text" className="input" aria-describedby="Title" placeholder="E.g. buy shoelaces" />
             <FieldErrorAlert error={errors.title} />
           </div>
           <button type="submit" className="button blue w-full md:w-fit">Add Todo</button>
