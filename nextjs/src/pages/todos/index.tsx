@@ -1,14 +1,26 @@
 import { Todo } from '@/backend/IBackend';
+import { Alert } from '@/components/Alert';
+import FieldErrorAlert from '@/components/FieldErrorAlert';
 import Layout from '@/components/Layout'
 import { Context } from '@/context/Context'
 import { useContext, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form';
+
+
+type FormData = {
+  title: string;
+};
 
 export default function Todos() {
 
+  const { register, handleSubmit, formState: { errors }, setError } = useForm<FormData>();
   const { user, backend } = useContext(Context);
 
   const [todos, setTodos] = useState<Todo[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
+
+  const onSubmit = async ({ title }: FormData) => {
+  };
 
   useEffect(() => {
     console.log('user', user);
@@ -45,8 +57,15 @@ export default function Todos() {
           </tbody>
         </table>
       }
-      <div className="mt-2 text-center">
-        <button type="submit" className="button blue w-full md:w-fit">Add Todo</button>
+      <div className="mt-10 text-center">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-2">
+            <input {...register("title", { required: "Title is required" })} type="text" className="input" aria-describedby="Title" placeholder="E.g. buy shoelaces" />
+            <FieldErrorAlert error={errors.title} />
+          </div>
+          <button type="submit" className="button blue w-full md:w-fit">Add Todo</button>
+          {errors.root?.serverError && <div className="mt-2"><Alert level="danger">{errors.root.serverError.message}</Alert></div>}
+        </form>
       </div>
     </div>;
 

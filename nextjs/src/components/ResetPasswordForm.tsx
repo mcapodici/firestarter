@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { match } from "ts-pattern";
 import { Alert } from "./Alert";
+import FieldErrorAlert from "./FieldErrorAlert";
 
 type FormData = {
     email: string;
@@ -32,7 +33,7 @@ export default function ResetPasswordForm() {
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-6">
                 <input {...register("email", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="text" className="input" aria-describedby="Email Address" placeholder="Email address" />
-                {fieldErrorAlertMsg(errors.email)}
+                <FieldErrorAlert error={errors.email} />
             </div>
             <button type="submit" className="button blue w-full">Send Reset Password Link</button>
             {errors.root?.serverError && <div className="mt-2"><Alert level="danger">{errors.root.serverError.message}</Alert></div>}
