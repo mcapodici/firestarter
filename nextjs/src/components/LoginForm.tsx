@@ -36,11 +36,11 @@ export default function LoginForm() {
     return <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-6">
-                <input {...register("email", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="text" className={inputClasses} aria-describedby="Email Address" placeholder="Email address" />
+                <input {...register("email", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="text" className="input" aria-describedby="Email Address" placeholder="Email address" />
                 {fieldErrorAlertMsg(errors.email)}
             </div>
             <div className="mb-6">
-                <input {...register("password", { required: "Password is required" })} type="password" className={inputClasses} aria-describedby="Password" placeholder="Password" />
+                <input {...register("password", { required: "Password is required" })} type="password" className="input" aria-describedby="Password" placeholder="Password" />
                 {fieldErrorAlertMsg(errors.password)}
             </div>
             <button type="submit" className="button blue w-full">Log in</button>
@@ -51,19 +51,3 @@ export default function LoginForm() {
         </form>
     </div>;
 }
-
-const inputClasses = `form-control
-block
-w-full
-px-3
-py-1.5
-text-base
-font-normal
-text-gray-700
-bg-white bg-clip-padding
-border border-solid border-gray-300
-rounded
-transition
-ease-in-out
-m-0
-focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none`;
