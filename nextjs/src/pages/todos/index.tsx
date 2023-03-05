@@ -42,7 +42,7 @@ export default function Todos() {
       })
     }
 
-  }, [user])
+  }, [backend, user])
 
   var content = hasError ?
     <p className='text-center'>Sorry there was an issue connecting to the server. Please reload to try again.</p> :
