@@ -1,5 +1,6 @@
 import {
   AddResult,
+  DeleteResult,
   GetListResult,
   IBackend,
   ISignupData,
@@ -13,7 +14,6 @@ import doSignUp from "./Signup";
 import doLogin from "./Login";
 import doResetPassword from "./ResetPassword";
 import * as todos from "./Todo";
-import { Address } from "cluster";
 
 export class Backend implements IBackend {
   async login(email: string, password: string): Promise<LoginResult> {
@@ -32,10 +32,13 @@ export class Backend implements IBackend {
   async addTodo(uid: string, title: string): Promise<AddResult> {
     return await todos.addTodo(uid, title);
   }
-  async getTodos(uid: string): Promise<GetListResult<Todo & { id: string }>> {
-    return await todos.getTodos(uid);
-  }
   async setTodo(todo: Partial<Todo> & { id: string }): Promise<SetResult> {
     return await todos.setTodo(todo);
+  }
+  async deleteTodo(id: string): Promise<DeleteResult> {
+    return await todos.deleteTodo(id);
+  }
+  async getTodos(uid: string): Promise<GetListResult<Todo & { id: string }>> {
+    return await todos.getTodos(uid);
   }
 }

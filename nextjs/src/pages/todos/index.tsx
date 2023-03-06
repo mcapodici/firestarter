@@ -38,10 +38,17 @@ export default function Todos() {
   };
 
   const toggle = async (id: string) => {
+    const todo = todos.find((t) => t.id === id);
+    if (todo) backend.setTodo({ id: todo.id, done: !todo.done });
     setTodos((todos) => {
-      const todo = todos.find((t) => t.id === id);
-      if (todo) backend.setTodo({ id: todo.id, done: !todo.done });
       return todos.map((t) => (t.id === id ? { ...t, done: !t.done } : t));
+    });
+  };
+
+  const deleteTodo = async (id: string) => {
+    backend.deleteTodo(id);
+    setTodos((todos) => {
+      return todos.filter((t) => t.id !== id);
     });
   };
 
@@ -94,7 +101,12 @@ export default function Todos() {
                   {todo.title}
                 </td>
                 <td className="flex gap-2 p-2">
-                  <button className="button blue">Remove</button>
+                  <button
+                    onClick={() => deleteTodo(todo.id)}
+                    className="button blue"
+                  >
+                    Remove
+                  </button>
                   <button
                     onClick={() => toggle(todo.id)}
                     className="button blue"

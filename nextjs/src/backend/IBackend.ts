@@ -31,6 +31,10 @@ export type SetResult =
   | { result: "success" }
   | { result: "fail"; message: string };
 
+export type DeleteResult =
+  | { result: "success" }
+  | { result: "fail"; message: string };
+
 export type GetListResult<T> =
   | { result: "success"; items: T[] }
   | { result: "fail"; message: string };
@@ -57,5 +61,6 @@ export interface IBackend {
   resetPassword(email: string): Promise<PasswordResetResult>;
   addTodo(uid: string, title: string): Promise<AddResult>;
   setTodo(todo: Partial<Todo>): Promise<SetResult>;
+  deleteTodo(id: string): Promise<DeleteResult>;
   getTodos(uid: string): Promise<GetListResult<Todo & { id: string }>>;
 }
