@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { Context } from "@/context/Context";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
@@ -85,6 +85,7 @@ describe("Todos", () => {
     await waitFor(() => {
       expect(screen.queryByRole("cell", { name: /my thing/i })).toBeNull();
     });
+    expect(mockContext.backend.deleteTodo).toBeCalledWith("1");
   });
 
   it("it can toggle an item", async () => {
@@ -103,11 +104,19 @@ describe("Todos", () => {
         "line-through"
       );
     });
+    expect(mockContext.backend.setTodo).toBeCalledWith({
+      done: false,
+      id: "1",
+    });
     await human.click(screen.getByText(/Toggle/i));
     await waitFor(() => {
       expect(screen.getByRole("cell", { name: /my thing/i })).toHaveClass(
         "line-through"
       );
+    });
+    expect(mockContext.backend.setTodo).toBeCalledWith({
+      done: true,
+      id: "1",
     });
   });
 });
