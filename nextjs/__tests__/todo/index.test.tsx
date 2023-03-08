@@ -73,4 +73,19 @@ describe("Todos", () => {
       );
     });
   });
+
+  it("it can remove an item", async () => {
+    await renderWith([{ title: "my thing", done: true, uid: "123", id: "1" }]);
+    await waitFor(() => {
+      expect(
+        screen.getByRole("cell", { name: /my thing/i })
+      ).toBeInTheDocument();
+    });
+    human.click(screen.getByRole("button", { name: /Remove/i }));
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("cell", { name: /my thing/i })
+      ).toBeNull();
+    });
+  });
 });
