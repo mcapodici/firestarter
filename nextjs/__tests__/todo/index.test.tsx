@@ -51,11 +51,14 @@ describe("Todos", () => {
   });
 
   it("it correctly shows an item that needs to be done", async () => {
-    await renderWith([{ title: "my thing", done: false, uid: "123" }]);
+    await renderWith([{ title: "my thing", done: false, uid: "123", id: "1" }]);
     await waitFor(() => {
       expect(
         screen.getByRole("cell", { name: /my thing/i })
       ).toBeInTheDocument();
+      expect(screen.getByRole("cell", { name: /my thing/i })).not.toHaveStyle({
+        "text-decoration-line": "line-through",
+      });
     });
   });
 });
