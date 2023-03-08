@@ -48,8 +48,8 @@ describe('ResetPassword', () => {
   }
 
   it('correct form elements shown', () => {
-    expect(screen.getAllByRole('heading').map(e => e.textContent)).toContain('Reset Password');
-    expect(screen.getAllByRole('button').map(e => e.textContent)).toContain('Send Reset Password Link');
+    expect(screen.getByRole("heading", { name: "Reset Password" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Send Reset Password Link" })).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Email address')).toBeInTheDocument();
   });
 

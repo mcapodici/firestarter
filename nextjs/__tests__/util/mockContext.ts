@@ -1,5 +1,6 @@
 import { IBackend } from "@/backend/IBackend";
 import { ContextInterface } from "@/context/Context";
+import { User } from "firebase/auth";
 
 export const makeMockContext = () => {
 
@@ -20,7 +21,7 @@ export const makeMockContext = () => {
     backend: backendMocks,
     toasts: [],
     addToast: jest.fn(),
-    user: undefined,
+    user: undefined as User | undefined,
   };
 
   // Type check
