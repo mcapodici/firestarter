@@ -56,9 +56,21 @@ describe("Todos", () => {
       expect(
         screen.getByRole("cell", { name: /my thing/i })
       ).toBeInTheDocument();
-      expect(screen.getByRole("cell", { name: /my thing/i })).not.toHaveStyle({
-        "text-decoration-line": "line-through",
-      });
+      expect(screen.getByRole("cell", { name: /my thing/i })).not.toHaveClass(
+        "line-through"
+      );
+    });
+  });
+
+  it("it correctly shows an item that is done", async () => {
+    await renderWith([{ title: "my thing", done: true, uid: "123", id: "1" }]);
+    await waitFor(() => {
+      expect(
+        screen.getByRole("cell", { name: /my thing/i })
+      ).toBeInTheDocument();
+      expect(screen.getByRole("cell", { name: /my thing/i })).toHaveClass(
+        "line-through"
+      );
     });
   });
 });
