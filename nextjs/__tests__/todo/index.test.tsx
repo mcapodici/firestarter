@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Context } from "@/context/Context";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
@@ -56,10 +56,10 @@ describe("Todos", () => {
       expect(
         screen.getByRole("cell", { name: /my thing/i })
       ).toBeInTheDocument();
-      expect(screen.getByRole("cell", { name: /my thing/i })).not.toHaveClass(
-        "line-through"
-      );
     });
+    expect(screen.getByRole("cell", { name: /my thing/i })).not.toHaveClass(
+      "line-through"
+    );
   });
 
   it("it correctly shows an item that is done", async () => {
@@ -68,10 +68,10 @@ describe("Todos", () => {
       expect(
         screen.getByRole("cell", { name: /my thing/i })
       ).toBeInTheDocument();
-      expect(screen.getByRole("cell", { name: /my thing/i })).toHaveClass(
-        "line-through"
-      );
     });
+    expect(screen.getByRole("cell", { name: /my thing/i })).toHaveClass(
+      "line-through"
+    );
   });
 
   it("it can remove an item", async () => {
@@ -81,11 +81,33 @@ describe("Todos", () => {
         screen.getByRole("cell", { name: /my thing/i })
       ).toBeInTheDocument();
     });
-    human.click(screen.getByRole("button", { name: /Remove/i }));
+    await human.click(screen.getByText(/Remove/i));
+    await waitFor(() => {
+      expect(screen.queryByRole("cell", { name: /my thing/i })).toBeNull();
+    });
+  });
+
+  it("it can toggle an item", async () => {
+    await renderWith([{ title: "my thing", done: true, uid: "123", id: "1" }]);
     await waitFor(() => {
       expect(
-        screen.queryByRole("cell", { name: /my thing/i })
-      ).toBeNull();
+        screen.getByRole("cell", { name: /my thing/i })
+      ).toBeInTheDocument();
+    });
+    expect(screen.getByRole("cell", { name: /my thing/i })).toHaveClass(
+      "line-through"
+    );
+    await human.click(screen.getByText(/Toggle/i));
+    await waitFor(() => {
+      expect(screen.getByRole("cell", { name: /my thing/i })).not.toHaveClass(
+        "line-through"
+      );
+    });
+    await human.click(screen.getByText(/Toggle/i));
+    await waitFor(() => {
+      expect(screen.getByRole("cell", { name: /my thing/i })).toHaveClass(
+        "line-through"
+      );
     });
   });
 });
