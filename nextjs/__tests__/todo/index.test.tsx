@@ -60,6 +60,7 @@ describe("Todos", () => {
     expect(screen.getByRole("cell", { name: /my thing/i })).not.toHaveClass(
       "line-through"
     );
+    expect(screen.queryAllByRole("row")).toHaveLength(2); // One header row and 1 data row
   });
 
   it("it correctly shows an item that is done", async () => {
@@ -118,5 +119,21 @@ describe("Todos", () => {
       done: true,
       id: "1",
     });
+  });
+  
+  it("it can add a todo", async () => {
+    mockContext.backend.addTodo.mockResolvedValue({
+      result: "success",
+      id: "456"
+    });
+    await renderWith([{ title: "my thing", done: true, uid: "123", id: "1" }]);
+    await new Promise(process.nextTick);
+    await human.type(screen.getByRole('textbox'), 'Buy Milk');
+    await human.click(screen.getByText(/Add Todo/i));
+    await waitFor(() => {
+      expect(screen.queryByRole("cell", { name: /Buy Milk/i })).not.toBeNull();
+    });
+    expect(screen.queryAllByRole("row")).toHaveLength(3); // One header row and 2 data rows
+    expect(mockContext.backend.addTodo).toBeCalledWith("123", "Buy Milk");
   });
 });
