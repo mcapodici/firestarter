@@ -104,12 +104,14 @@ export default function Todos() {
                   <button
                     onClick={() => deleteTodo(todo.id)}
                     className="button blue"
+                    aria-label={`Remove '${todo.title}'`}
                   >
                     Remove
                   </button>
                   <button
                     onClick={() => toggle(todo.id)}
                     className="button blue"
+                    aria-label={`Toggle '${todo.title}'`}
                   >
                     Toggle
                   </button>

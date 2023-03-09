@@ -76,13 +76,16 @@ describe("Todos", () => {
   });
 
   it("it can remove an item", async () => {
-    await renderWith([{ title: "my thing", done: true, uid: "123", id: "1" }]);
+    await renderWith([
+      { title: "my thing", done: true, uid: "123", id: "1" },
+      { title: "your thing", done: false, uid: "123", id: "2" },
+    ]);
     await waitFor(() => {
       expect(
         screen.getByRole("cell", { name: /my thing/i })
       ).toBeInTheDocument();
     });
-    await human.click(screen.getByText(/Remove/i));
+    await human.click(screen.getByLabelText(/Remove 'my thing'/));
     await waitFor(() => {
       expect(screen.queryByRole("cell", { name: /my thing/i })).toBeNull();
     });
@@ -90,7 +93,10 @@ describe("Todos", () => {
   });
 
   it("it can toggle an item", async () => {
-    await renderWith([{ title: "my thing", done: true, uid: "123", id: "1" }]);
+    await renderWith([
+      { title: "my thing", done: true, uid: "123", id: "1" },
+      { title: "your thing", done: false, uid: "123", id: "2" },
+    ]);
     await waitFor(() => {
       expect(
         screen.getByRole("cell", { name: /my thing/i })
@@ -99,7 +105,7 @@ describe("Todos", () => {
     expect(screen.getByRole("cell", { name: /my thing/i })).toHaveClass(
       "line-through"
     );
-    await human.click(screen.getByText(/Toggle/i));
+    await human.click(screen.getByLabelText(/Toggle 'my thing'/));
     await waitFor(() => {
       expect(screen.getByRole("cell", { name: /my thing/i })).not.toHaveClass(
         "line-through"
@@ -109,7 +115,7 @@ describe("Todos", () => {
       done: false,
       id: "1",
     });
-    await human.click(screen.getByText(/Toggle/i));
+    await human.click(screen.getByLabelText(/Toggle 'my thing'/));
     await waitFor(() => {
       expect(screen.getByRole("cell", { name: /my thing/i })).toHaveClass(
         "line-through"
@@ -120,15 +126,15 @@ describe("Todos", () => {
       id: "1",
     });
   });
-  
+
   it("it can add a todo", async () => {
     mockContext.backend.addTodo.mockResolvedValue({
       result: "success",
-      id: "456"
+      id: "456",
     });
     await renderWith([{ title: "my thing", done: true, uid: "123", id: "1" }]);
     await new Promise(process.nextTick);
-    await human.type(screen.getByRole('textbox'), 'Buy Milk');
+    await human.type(screen.getByRole("textbox"), "Buy Milk");
     await human.click(screen.getByText(/Add Todo/i));
     await waitFor(() => {
       expect(screen.queryByRole("cell", { name: /Buy Milk/i })).not.toBeNull();
