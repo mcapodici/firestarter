@@ -62,7 +62,7 @@ export default function Todos() {
         }
       });
     }
-  }, [backend, user]);
+  }, [backend, user, addToast]);
 
   var content = hasError ? (
     <p className="text-center">

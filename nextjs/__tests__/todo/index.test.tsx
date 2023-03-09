@@ -8,6 +8,7 @@ import Todos from "@/pages/todos";
 import { User } from "firebase/auth";
 import { Todo } from "@/backend/IBackend";
 import { act } from "react-dom/test-utils";
+import mockRouter from "next-router-mock";
 
 jest.mock("next/router", () => require("next-router-mock"));
 
@@ -16,14 +17,15 @@ describe("Todos", () => {
 
   let human: UserEvent;
 
-  async function renderWith(todos: Todo[]) {
+  async function renderWith(todos: Todo[] = [], hasUser: boolean = true) {
     await act(async () => {
+      mockRouter.setCurrentUrl("/todos");
       human = userEvent.setup();
       mockContext.backend.getTodos.mockResolvedValue({
         result: "success",
         items: todos,
       });
-      mockContext.user = { uid: "123" } as User;
+      mockContext.user = hasUser ? ({ uid: "123" } as User) : undefined;
       render(
         <Context.Provider value={mockContext}>
           <Todos />
@@ -37,10 +39,13 @@ describe("Todos", () => {
     jest.clearAllMocks();
   });
 
-  it("redirects to login page if not logged in", () => {});
+  it("redirects to login page if not logged in", async () => {
+    await renderWith([], false);
+    expect(mockRouter.asPath).toEqual("/login");
+  });
 
   it("correct form elements shown", async () => {
-    await renderWith([]);
+    await renderWith();
     expect(screen.getByRole("heading", { name: "Todos" })).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText("E.g. buy shoelaces")
@@ -142,4 +147,7 @@ describe("Todos", () => {
     expect(screen.queryAllByRole("row")).toHaveLength(3); // One header row and 2 data rows
     expect(mockContext.backend.addTodo).toBeCalledWith("123", "Buy Milk");
   });
+
+  // Do tdd on not being logged in.
+  // Do todo fb tests
 });
