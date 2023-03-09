@@ -5,21 +5,44 @@
 /* Tailwind */
 
 .anchor {
-   @apply underline text-blue-600
+  @apply underline text-blue-600;
 }
 
 .anchor:hover {
-   @apply text-blue-800
+  @apply text-blue-800;
 }
 
 .anchor:visited:visited {
-   @apply text-purple-600
+  @apply text-purple-600;
 }
 
 .button.blue {
-   @apply px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out
+  @apply px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out;
 }
 
 .input {
-   @apply block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+  @apply block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+}
+
+@keyframes yourAnimation {
+  0% {
+    background: #eeeeee;
+  }
+  25% {
+    background: #cccccc;
+  }
+  50% {
+    background: #eeeeee;
+  }
+  75% {
+    background: #cccccc;
+  }
+  100% {
+   background: #eeeeee;
+  }
+}
+
+
+.content-placeholder {
+  animation: yourAnimation 2s linear 0s infinite normal none;
 }

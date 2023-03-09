@@ -23,6 +23,7 @@ export default function Todos() {
 
   const [todos, setTodos] = useState<(Todo & { id: string })[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onSubmit = async ({ title }: FormData) => {
     if (user) {
@@ -56,9 +57,11 @@ export default function Todos() {
 
   useEffect(() => {
     if (user) {
+      setLoading(true);
       backend.getTodos(user.uid).then((todos) => {
         if (todos.result === "success") {
           setTodos(todos.items);
+          setLoading(false);
         } else {
           setHasError(true);
         }
@@ -68,7 +71,7 @@ export default function Todos() {
 
   let content: JSX.Element;
 
-  if (authLoading) {
+  if (!user && authLoading) {
     content = <></>;
   } else if (!user) {
     content = <RequiresLoginNotice />;
@@ -82,7 +85,7 @@ export default function Todos() {
   } else {
     content = (
       <div className="m-auto max-w-5xl p-2">
-        {todos.length > 0 && (
+        {(loading || todos.length) > 0 && (
           <table className="min-w-full text-left text-sm font-light">
             <thead className="border-b font-medium dark:border-neutral-500">
               <tr>
@@ -98,37 +101,62 @@ export default function Todos() {
               </tr>
             </thead>
             <tbody>
-              {todos.map((todo, index) => (
-                <tr key={todo.id} className="border-b dark:border-neutral-500">
-                  <td className="whitespace-nowrap px-6 py-4 font-medium">
-                    {index + 1}
-                  </td>
-                  <td
-                    className={
-                      `whitespace-nowrap px-6 py-4 ` +
-                      (todo.done ? "line-through" : "")
-                    }
+              {loading ? (
+                <>
+                  <tr className="border-b dark:border-neutral-500">
+                    <td className="whitespace-nowrap px-6 py-4 font-medium">
+                      <div className="w-8 h-8 content-placeholder">
+                        
+                      </div>
+                    </td>
+                    <td>
+                      <div className="w-32 h-8 content-placeholder">
+                        
+                      </div>
+                    </td>
+                    <td className="flex gap-2 p-2">
+                      <div className="w-32 h-8 content-placeholder">
+                        
+                      </div>
+                    </td>
+                  </tr>
+                </>
+              ) : (
+                todos.map((todo, index) => (
+                  <tr
+                    key={todo.id}
+                    className="border-b dark:border-neutral-500"
                   >
-                    {todo.title}
-                  </td>
-                  <td className="flex gap-2 p-2">
-                    <button
-                      onClick={() => deleteTodo(todo.id)}
-                      className="button blue"
-                      aria-label={`Remove '${todo.title}'`}
+                    <td className="whitespace-nowrap px-6 py-4 font-medium">
+                      {index + 1}
+                    </td>
+                    <td
+                      className={
+                        `whitespace-nowrap px-6 py-4 ` +
+                        (todo.done ? "line-through" : "")
+                      }
                     >
-                      Remove
-                    </button>
-                    <button
-                      onClick={() => toggle(todo.id)}
-                      className="button blue"
-                      aria-label={`Toggle '${todo.title}'`}
-                    >
-                      Toggle
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                      {todo.title}
+                    </td>
+                    <td className="flex gap-2 p-2">
+                      <button
+                        onClick={() => deleteTodo(todo.id)}
+                        className="button blue"
+                        aria-label={`Remove '${todo.title}'`}
+                      >
+                        Remove
+                      </button>
+                      <button
+                        onClick={() => toggle(todo.id)}
+                        className="button blue"
+                        aria-label={`Toggle '${todo.title}'`}
+                      >
+                        Toggle
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         )}
