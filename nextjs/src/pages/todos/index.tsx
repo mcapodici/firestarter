@@ -3,8 +3,10 @@ import { Alert } from "@/components/Alert";
 import FieldErrorAlert from "@/components/FieldErrorAlert";
 import Layout from "@/components/Layout";
 import { Context } from "@/context/Context";
+import { match } from "ts-pattern";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import RequiresLoginNotice from "@/components/RequiresLoginNotice";
 
 type FormData = {
   title: string;
@@ -64,88 +66,98 @@ export default function Todos() {
     }
   }, [backend, user, addToast]);
 
-  var content = hasError ? (
-    <p className="text-center">
-      Sorry there was an issue connecting to the server. Please reload to try
-      again.
-    </p>
-  ) : (
-    <div className="m-auto max-w-5xl p-2">
-      {todos.length > 0 && (
-        <table className="min-w-full text-left text-sm font-light">
-          <thead className="border-b font-medium dark:border-neutral-500">
-            <tr>
-              <th scope="col" className="px-6 py-4">
-                #
-              </th>
-              <th scope="col" className="px-6 py-4 w-full">
-                What
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {todos.map((todo, index) => (
-              <tr key={todo.id} className="border-b dark:border-neutral-500">
-                <td className="whitespace-nowrap px-6 py-4 font-medium">
-                  {index + 1}
-                </td>
-                <td
-                  className={
-                    `whitespace-nowrap px-6 py-4 ` +
-                    (todo.done ? "line-through" : "")
-                  }
-                >
-                  {todo.title}
-                </td>
-                <td className="flex gap-2 p-2">
-                  <button
-                    onClick={() => deleteTodo(todo.id)}
-                    className="button blue"
-                    aria-label={`Remove '${todo.title}'`}
-                  >
-                    Remove
-                  </button>
-                  <button
-                    onClick={() => toggle(todo.id)}
-                    className="button blue"
-                    aria-label={`Toggle '${todo.title}'`}
-                  >
-                    Toggle
-                  </button>
-                </td>
+  let content: JSX.Element;
+
+  if (!user) {
+    content = (
+      <RequiresLoginNotice />
+    );
+  } else if (hasError) {
+    content = (
+      <p className="text-center">
+        Sorry there was an issue connecting to the server. Please reload to try
+        again.
+      </p>
+    );
+  } else {
+    content = (
+      <div className="m-auto max-w-5xl p-2">
+        {todos.length > 0 && (
+          <table className="min-w-full text-left text-sm font-light">
+            <thead className="border-b font-medium dark:border-neutral-500">
+              <tr>
+                <th scope="col" className="px-6 py-4">
+                  #
+                </th>
+                <th scope="col" className="px-6 py-4 w-full">
+                  What
+                </th>
+                <th scope="col" className="px-6 py-4">
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-      <div className="mt-10 text-center">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-2">
-            <input
-              maxLength={100}
-              {...register("title", { required: "Title is required" })}
-              type="text"
-              className="input"
-              aria-describedby="Title"
-              placeholder="E.g. buy shoelaces"
-            />
-            <FieldErrorAlert error={errors.title} />
-          </div>
-          <button type="submit" className="button blue w-full md:w-fit">
-            Add Todo
-          </button>
-          {errors.root?.serverError && (
-            <div className="mt-2">
-              <Alert level="danger">{errors.root.serverError.message}</Alert>
+            </thead>
+            <tbody>
+              {todos.map((todo, index) => (
+                <tr key={todo.id} className="border-b dark:border-neutral-500">
+                  <td className="whitespace-nowrap px-6 py-4 font-medium">
+                    {index + 1}
+                  </td>
+                  <td
+                    className={
+                      `whitespace-nowrap px-6 py-4 ` +
+                      (todo.done ? "line-through" : "")
+                    }
+                  >
+                    {todo.title}
+                  </td>
+                  <td className="flex gap-2 p-2">
+                    <button
+                      onClick={() => deleteTodo(todo.id)}
+                      className="button blue"
+                      aria-label={`Remove '${todo.title}'`}
+                    >
+                      Remove
+                    </button>
+                    <button
+                      onClick={() => toggle(todo.id)}
+                      className="button blue"
+                      aria-label={`Toggle '${todo.title}'`}
+                    >
+                      Toggle
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        <div className="mt-10 text-center">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mb-2">
+              <input
+                maxLength={100}
+                {...register("title", { required: "Title is required" })}
+                type="text"
+                className="input"
+                aria-describedby="Title"
+                placeholder="E.g. buy shoelaces"
+              />
+              <FieldErrorAlert error={errors.title} />
             </div>
-          )}
-        </form>
+            <button type="submit" className="button blue w-full md:w-fit">
+              Add Todo
+            </button>
+            {errors.root?.serverError && (
+              <div className="mt-2">
+                <Alert level="danger">{errors.root.serverError.message}</Alert>
+              </div>
+            )}
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 
   return (
     <>

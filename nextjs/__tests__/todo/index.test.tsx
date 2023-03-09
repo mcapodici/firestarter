@@ -39,9 +39,13 @@ describe("Todos", () => {
     jest.clearAllMocks();
   });
 
-  it("redirects to login page if not logged in", async () => {
+  it("correct form elements shown when not logged in", async () => {
     await renderWith([], false);
-    expect(mockRouter.asPath).toEqual("/login");
+    expect(screen.getByRole("heading", { name: "Todos" })).toBeInTheDocument();
+    expect(screen.getByText(/This page requires you to be signed in/i)).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /Add Todo/i })
+    ).toBeNull();
   });
 
   it("correct form elements shown", async () => {
@@ -147,7 +151,4 @@ describe("Todos", () => {
     expect(screen.queryAllByRole("row")).toHaveLength(3); // One header row and 2 data rows
     expect(mockContext.backend.addTodo).toBeCalledWith("123", "Buy Milk");
   });
-
-  // Do tdd on not being logged in.
-  // Do todo fb tests
 });
