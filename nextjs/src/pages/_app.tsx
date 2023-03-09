@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 
-  return <Context.Provider value={{ backend, toasts, addToast: addToastThenScroll, user }}>
+  return <Context.Provider value={{ backend, toasts, addToast: addToastThenScroll, user, authLoading }}>
     <Component {...pageProps} />
   </Context.Provider>
 }

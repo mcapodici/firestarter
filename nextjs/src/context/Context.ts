@@ -9,6 +9,7 @@ export interface ContextInterface {
     toasts: Toast[];
     addToast: ToastAdder;
     user?: User;
+    authLoading: boolean;
 }
 
 export const Context = React.createContext<ContextInterface>({} as any);

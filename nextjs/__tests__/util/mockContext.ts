@@ -22,6 +22,7 @@ export const makeMockContext = () => {
     toasts: [],
     addToast: jest.fn(),
     user: undefined as User | undefined,
+    authLoading: false
   };
 
   // Type check

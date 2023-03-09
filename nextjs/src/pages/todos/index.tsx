@@ -19,7 +19,7 @@ export default function Todos() {
     formState: { errors },
     reset,
   } = useForm<FormData>();
-  const { user, backend, addToast } = useContext(Context);
+  const { user, backend, addToast, authLoading } = useContext(Context);
 
   const [todos, setTodos] = useState<(Todo & { id: string })[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -68,10 +68,10 @@ export default function Todos() {
 
   let content: JSX.Element;
 
-  if (!user) {
-    content = (
-      <RequiresLoginNotice />
-    );
+  if (authLoading) {
+    content = <></>;
+  } else if (!user) {
+    content = <RequiresLoginNotice />;
   } else if (hasError) {
     content = (
       <p className="text-center">
