@@ -2,10 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useContext, useState } from "react";
 import { Context } from "@/context/Context";
+import router from "next/router";
 
 export default function Nav() {
   const [expandedNav, setExpandedNav] = useState(false);
-  const { user } = useContext(Context);
+  const { user, backend, addToast } = useContext(Context);
 
   return (
     <nav className="shadow-md py-2 bg-white relative flex items-center w-full justify-between">
@@ -90,7 +91,11 @@ export default function Nav() {
 
           {user && (
             <button
-              onClick={() => {}}
+              onClick={async () => {
+                backend.logout();
+                await router.push("/login");
+                addToast("You are now logged out.", "success");
+              }}
               type="button"
               className="inline-block px-6 py-2.5 mr-2 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out"
             >
