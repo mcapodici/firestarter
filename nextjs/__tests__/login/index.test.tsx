@@ -46,7 +46,7 @@ describe('Login', () => {
   }
 
   it('correct form elements shown', () => {
-    expect(screen.getAllByRole('heading').map(e => e.textContent)).toContain('Log in');
+    expect(screen.getByRole("heading", { name: "Log in" })).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Email address')).toBeInTheDocument();
     const pw = screen.getByPlaceholderText('Password');
     expect(pw).toBeInTheDocument();
