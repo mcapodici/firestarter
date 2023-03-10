@@ -12,7 +12,7 @@ const styles = {
 }
 
 export function Alert({ level, children }: Props) {
-    return <div className={`rounded-lg py-2 px-3 text-xs mb-3 ${styles[level]}`} role="alert">
+    return <div className={`rounded-lg py-2 px-3 text-xs ${styles[level]}`} role="alert">
         {children}
     </div>;
 }
