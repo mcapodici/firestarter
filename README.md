@@ -1,6 +1,5 @@
 ![Firestarter Logo](https://firestarter-three.vercel.app/logo.png)
 
-# Firestarter
 Firestarter is a way to quicky create your MVP web app. You just copy the code, then adapt to your project.
 
 It uses/will use Firebase, NextJS, Tailwind CSS, Tailwind Elements, and Github Actions
