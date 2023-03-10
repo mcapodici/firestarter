@@ -21,7 +21,7 @@ describe('Navigation', () => {
   beforeEach(() => render(<Home />, { wrapper: MemoryRouterProvider }));
   it('is shown', () => {
     const nav = screen.getByRole('navigation');
-    ['Dashboard', 'Team', 'Projects', 'Login', 'Sign up for free'].forEach(t => expect(getByText(nav, t)).toBeVisible());
+    ['Todos', 'Team', 'Projects', 'Login', 'Sign up for free'].forEach(t => expect(getByText(nav, t)).toBeVisible());
   });
   it('signup', () => {
     const signup = screen.getByText('Sign up for free');
