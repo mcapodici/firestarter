@@ -20,13 +20,13 @@ export interface ToastProps {
     children?: React.ReactNode;
 }
 
-export const Toasts = ({ toasts }: ToastsProps) => <>
+export const Toasts = ({ toasts }: ToastsProps) => <div className="grid gap-1">
     {toasts?.map(t =>
         <Alert key={t.id} level={t.level || 'success'}>
             <p>{t.message}</p>
         </Alert>
     )}
-</>
+</div>
 
 export type ToastAdder = (message: string, level?: AlertLevel, tag?: string, removeOthersWithTag?: boolean) => void;
 
