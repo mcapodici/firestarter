@@ -21,7 +21,7 @@ export default function Nav() {
           </svg>
         </button>
         <Link className="text-blue-600 mr-2" href="/">
-          <Image src="/logo.png" alt="Logo" height={24} width={24} />
+          <Image src="/logo.png" alt="Logo" height={62 / 2} width={278 / 2} />
         </Link>
       </div>
       <div className={`${expandedNav ? '' : 'hidden'} lg:block grow items-center basis-full lg:basis-0`}  id="navigationItems">
