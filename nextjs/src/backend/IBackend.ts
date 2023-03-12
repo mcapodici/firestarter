@@ -39,9 +39,7 @@ export type GetListResult<T> =
   | { result: "success"; items: T[] }
   | { result: "fail"; message: string };
 
-export type LogoutResult =
-  | { result: "success" }
-  | { result: "fail"; message: string };
+export type LogoutResult = { result: "success" } | { result: "fail" };
 
 export interface ISignupData {
   firstName?: string;
