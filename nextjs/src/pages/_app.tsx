@@ -8,6 +8,10 @@ import { Context } from '@/context/Context';
 import { Backend } from '@/backend/Backend';
 import { AlertLevel } from '@/components/Alert';
 import useAuthState from '@/auth/useAuthState';
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
+config.autoAddCss = false
 
 const backend = new Backend();
 

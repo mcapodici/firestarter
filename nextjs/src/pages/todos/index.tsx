@@ -1,12 +1,13 @@
 import { Todo } from "@/backend/IBackend";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert } from "@/components/Alert";
 import FieldErrorAlert from "@/components/FieldErrorAlert";
 import Layout from "@/components/Layout";
 import { Context } from "@/context/Context";
-import { match } from "ts-pattern";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import RequiresLoginNotice from "@/components/RequiresLoginNotice";
+import { faTrash, faToggleOn, faToggleOff } from "@fortawesome/free-solid-svg-icons";
 
 type FormData = {
   title: string;
@@ -105,19 +106,13 @@ export default function Todos() {
                 <>
                   <tr className="border-b dark:border-neutral-500">
                     <td className="whitespace-nowrap px-6 py-4 font-medium">
-                      <div className="w-8 h-8 content-placeholder">
-                        
-                      </div>
+                      <div className="w-8 h-8 content-placeholder"></div>
                     </td>
                     <td>
-                      <div className="w-32 h-8 content-placeholder">
-                        
-                      </div>
+                      <div className="w-32 h-8 content-placeholder"></div>
                     </td>
                     <td className="flex gap-2 p-2">
-                      <div className="w-32 h-8 content-placeholder">
-                        
-                      </div>
+                      <div className="w-32 h-8 content-placeholder"></div>
                     </td>
                   </tr>
                 </>
@@ -144,14 +139,14 @@ export default function Todos() {
                         className="button blue"
                         aria-label={`Remove '${todo.title}'`}
                       >
-                        Remove
+                        <FontAwesomeIcon title="Remove" icon={faTrash} />
                       </button>
                       <button
                         onClick={() => toggle(todo.id)}
                         className="button blue"
                         aria-label={`Toggle '${todo.title}'`}
                       >
-                        Toggle
+                        <FontAwesomeIcon title="Toggle" icon={todo.done ? faToggleOff : faToggleOn} />
                       </button>
                     </td>
                   </tr>
