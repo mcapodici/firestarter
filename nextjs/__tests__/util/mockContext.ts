@@ -7,6 +7,7 @@ export const makeMockContext = () => {
   const backendMocks = {
     signup: jest.fn(),
     login: jest.fn(),
+    logout: jest.fn(),
     resetPassword: jest.fn(),
     addTodo: jest.fn(),
     setTodo: jest.fn(),

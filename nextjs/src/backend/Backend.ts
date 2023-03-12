@@ -5,6 +5,7 @@ import {
   IBackend,
   ISignupData,
   LoginResult,
+  LogoutResult,
   PasswordResetResult,
   SetResult,
   SignupResult,
@@ -12,12 +13,16 @@ import {
 } from "./IBackend";
 import doSignUp from "./Signup";
 import doLogin from "./Login";
+import doLogout from "./Logout";
 import doResetPassword from "./ResetPassword";
 import * as todos from "./Todo";
 
 export class Backend implements IBackend {
   async login(email: string, password: string): Promise<LoginResult> {
     return await doLogin(email, password);
+  }
+  async logout(): Promise<LogoutResult> {
+    return await doLogout();
   }
   async signup(
     email: string,

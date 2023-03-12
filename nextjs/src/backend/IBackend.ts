@@ -39,6 +39,8 @@ export type GetListResult<T> =
   | { result: "success"; items: T[] }
   | { result: "fail"; message: string };
 
+export type LogoutResult = { result: "success" } | { result: "fail" };
+
 export interface ISignupData {
   firstName?: string;
   lastName?: string;
@@ -58,6 +60,7 @@ export interface IBackend {
     data: ISignupData
   ): Promise<SignupResult>;
   login(email: string, password: string): Promise<LoginResult>;
+  logout(): Promise<LogoutResult>;
   resetPassword(email: string): Promise<PasswordResetResult>;
   addTodo(uid: string, title: string): Promise<AddResult>;
   setTodo(todo: Partial<Todo>): Promise<SetResult>;
