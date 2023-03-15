@@ -3,14 +3,24 @@ import Image from "next/image";
 import { useContext, useState } from "react";
 import { Context } from "@/context/Context";
 import router from "next/router";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Nav() {
   const [expandedNav, setExpandedNav] = useState(false);
+  const [expandedUser, setExpandedUser] = useState(false);
   const { user, backend, addToast } = useContext(Context);
 
+  const logout = async () => {
+    setExpandedUser(false);
+    await backend.logout();
+    await router.push("/login");
+    addToast("You are now logged out.", "success");
+  };
+
   return (
-    <nav className="shadow-md py-2 bg-white relative flex items-center w-full justify-between">
-      <div className="px-6 w-full flex flex-wrap items-center justify-between">
+    <nav className="relative z-50">
+      <div className="relative shadow-md py-2 px-6 w-full flex flex-wrap items-center justify-between">
         <div className="flex items-center">
           <button
             onClick={() => {
@@ -41,77 +51,89 @@ export default function Nav() {
             <Image src="/logo.png" alt="Logo" height={62 / 2} width={278 / 2} />
           </Link>
         </div>
-        <div
-          className={`${
-            expandedNav ? "" : "hidden"
-          } lg:block grow items-center basis-full lg:basis-0`}
-          id="navigationItems"
-        >
-          <ul className="mr-auto lg:flex lg:flex-row">
-            <li className="nav-item">
-              <Link
-                href="/todos"
-                className="nav-link block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
-              >
-                Todos
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                href="/"
-                className="nav-link block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
-              >
-                Team
-              </Link>
-            </li>
-            <li className="nav-item mb-2 lg:mb-0">
-              <Link
-                href="/"
-                className="nav-link block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
-              >
-                Projects
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div
-          className={`${
-            expandedNav ? "" : "hidden"
-          } lg:block flex items-center lg:ml-auto`}
-        >
+        {expandedNav && (
+          <div
+            className="lg:block grow items-center basis-full lg:basis-0"
+            id="navigationItems"
+          >
+            <ul className="mr-auto lg:flex lg:flex-row">
+              <li className="nav-item">
+                <Link href="/todos" className="menu-item">
+                  Todos
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link href="/" className="menu-item">
+                  Team
+                </Link>
+              </li>
+              <li className="nav-item mb-2 lg:mb-0">
+                <Link href="/" className="menu-item">
+                  Projects
+                </Link>
+              </li>
+            </ul>
+          </div>
+        )}
+        <div className="flex items-center lg:ml-auto">
           {!user && (
-            <Link
-              href="/login"
-              type="button"
-              className="inline-block px-6 py-2.5 mr-2 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out"
-            >
-              Login
-            </Link>
+            <>
+              <Link
+                href="/login"
+                type="button"
+                className="inline-block px-6 py-2.5 mr-2 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out"
+              >
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              >
+                Sign up for free
+              </Link>
+            </>
           )}
 
           {user && (
-            <button
-              onClick={async () => {                
-                await backend.logout();
-                await router.push("/login");
-                addToast("You are now logged out.", "success");
-              }}
-              type="button"
-              className="inline-block px-6 py-2.5 mr-2 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out"
-            >
-              Log out
-            </button>
-          )}
-
-          {!user && (
-            <Link
-              href="/signup"
-              className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-            >
-              Sign up for free
-            </Link>
+            <>
+              <button
+                className="relative w-10 h-10"
+                onClick={() => {
+                  setExpandedUser((x) => !x);
+                }}
+              >
+                <Image
+                  className="border-blue-600 border-2 border-solid rounded-full overflow-hidden "
+                  src="/example-profile-image.jpg"
+                  alt="123"
+                  fill
+                />
+              </button>
+            </>
           )}
         </div>
+        {expandedUser && (
+          <div
+            className="right-0 top-full w-full md:w-auto p-1 absolute bg-transparent"
+            id="navigationItems"
+          >
+            <ul className="flex flex-col items-end bg-white p-1 pl-4 rounded border-2 border-solid border-grey-400">
+              <li className="nav-item">
+                <Link href="/profile" className="menu-item">
+                  Profile
+                </Link>
+              </li>
+              <li className="nav-item">
+                <button
+                  className="menu-item"
+                  onClick={logout}
+                >
+                  Log Out
+                </button>
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
     </nav>
   );
