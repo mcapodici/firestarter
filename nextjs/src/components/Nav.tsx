@@ -51,30 +51,32 @@ export default function Nav() {
             <Image src="/logo.png" alt="Logo" height={62 / 2} width={278 / 2} />
           </Link>
         </div>
-        {expandedNav && (
-          <div
-            className="lg:block grow items-center basis-full lg:basis-0"
-            id="navigationItems"
-          >
-            <ul className="mr-auto lg:flex lg:flex-row">
-              <li className="nav-item">
-                <Link href="/todos" className="menu-item">
-                  Todos
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link href="/" className="menu-item">
-                  Team
-                </Link>
-              </li>
-              <li className="nav-item mb-2 lg:mb-0">
-                <Link href="/" className="menu-item">
-                  Projects
-                </Link>
-              </li>
-            </ul>
-          </div>
-        )}
+
+        <div
+          className={`${
+            expandedNav ? "" : "hidden"
+          } lg:block grow items-center basis-full lg:basis-0`}
+          id="navigationItems"
+        >
+          <ul className="mr-auto lg:flex lg:flex-row">
+            <li className="nav-item">
+              <Link href="/todos" className="menu-item">
+                Todos
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/" className="menu-item">
+                Team
+              </Link>
+            </li>
+            <li className="nav-item mb-2 lg:mb-0">
+              <Link href="/" className="menu-item">
+                Projects
+              </Link>
+            </li>
+          </ul>
+        </div>
+
         <div className="flex items-center lg:ml-auto">
           {!user && (
             <>
@@ -97,6 +99,7 @@ export default function Nav() {
           {user && (
             <>
               <button
+                title="User Menu"
                 className="relative w-10 h-10"
                 onClick={() => {
                   setExpandedUser((x) => !x);
@@ -124,10 +127,7 @@ export default function Nav() {
                 </Link>
               </li>
               <li className="nav-item">
-                <button
-                  className="menu-item"
-                  onClick={logout}
-                >
+                <button className="menu-item" onClick={logout}>
                   Log Out
                 </button>
               </li>
