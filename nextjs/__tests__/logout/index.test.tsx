@@ -28,6 +28,7 @@ describe("Logout", () => {
   it("if logged in, can log out", async () => {
     doRender(true);
     mockContext.backend.logout.mockResolvedValue(undefined);
+    await user.click(screen.getByTitle(/user menu/i));
     expect(screen.getByText(/log out/i)).toBeInTheDocument();
     await user.click(screen.getByText(/log out/i));
     expect(mockContext.backend.logout).toBeCalled();
@@ -35,7 +36,7 @@ describe("Logout", () => {
     // (picked up by useAuthState) which is used by _app.tsx, which is not under test here.
   });
 
-  it("if not logged in, can 'tlog out", async () => {
+  it("if not logged in, can't log out", async () => {
     doRender(false);
     mockContext.backend.logout.mockResolvedValue(undefined);
     expect(screen.queryByText(/log out/i)).toBeNull();

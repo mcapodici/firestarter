@@ -24,7 +24,7 @@
   @apply block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
 }
 
-@keyframes yourAnimation {
+@keyframes contentPlaceholderFrames {
   0% {
     background: #eeeeee;
   }
@@ -42,7 +42,10 @@
   }
 }
 
-
 .content-placeholder {
-  animation: yourAnimation 2s linear 0s infinite normal none;
+  animation: contentPlaceholderFrames 2s linear 0s infinite normal none;
+}
+
+.menu-item {
+  @apply block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-900 hover:font-semibold focus:text-gray-900 focus:font-semibold transition duration-150 ease-in-out
 }
