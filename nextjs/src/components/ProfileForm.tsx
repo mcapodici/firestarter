@@ -28,6 +28,7 @@ export default function SignupForm() {
     useEffect(() => {
         if (user) {
             backend.getProfile(user.uid).then(res => {
+                console.log('res', res);
                 if (res.result === 'success') {
                     setValue('firstName', res.item.firstName);
                     setValue('lastName', res.item.lastName);
@@ -41,7 +42,7 @@ export default function SignupForm() {
     const fieldErrorAlertMsg = (err: FieldError | undefined) => err && <div className="mt-2"><Alert level="danger">{err.message}</Alert></div>;
 
     return <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form role="form" onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-6">
                 <input {...register("firstName", { required: "First name is required" })} maxLength={100} type="text" className="input" aria-describedby="First name" placeholder="First name" />
                 {fieldErrorAlertMsg(errors.firstName)}
@@ -50,7 +51,7 @@ export default function SignupForm() {
                 <input {...register("lastName", { required: "Last name is required" })} type="text" className="input" aria-describedby="Last name" placeholder="Last name" />
                 {fieldErrorAlertMsg(errors.lastName)}
             </div>
-            <button type="submit" className="button blue w-full">Save Changes</button>
+            <button type="submit" className="button blue w-full">Save</button>
 
             {errors.root?.serverError && <div className="mt-2"><Alert level="danger">{errors.root.serverError.message}</Alert></div>}
         </form>
