@@ -39,11 +39,15 @@ export type GetListResult<T> =
   | { result: "success"; items: T[] }
   | { result: "fail"; message: string };
 
+export type GetItemResult<T> =
+| { result: "success"; item: T }
+| { result: "fail"; message: string };
+
 export type LogoutResult = { result: "success" } | { result: "fail" };
 
-export interface ISignupData {
-  firstName?: string;
-  lastName?: string;
+export interface Profile {
+  firstName: string;
+  lastName: string; 
 }
 
 export interface Todo {
@@ -57,11 +61,13 @@ export interface IBackend {
   signup(
     email: string,
     password: string,
-    data: ISignupData
+    data: Profile
   ): Promise<SignupResult>;
   login(email: string, password: string): Promise<LoginResult>;
   logout(): Promise<LogoutResult>;
   resetPassword(email: string): Promise<PasswordResetResult>;
+  getProfile(uid: string): Promise<GetItemResult<Profile>>;
+  setProfile(uid: string, data: Profile): Promise<SetResult>;
   addTodo(uid: string, title: string): Promise<AddResult>;
   setTodo(todo: Partial<Todo>): Promise<SetResult>;
   deleteTodo(id: string): Promise<DeleteResult>;
