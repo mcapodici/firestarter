@@ -43,20 +43,20 @@ export default function SignupForm() {
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid md:grid-cols-2 md:gap-4">
                 <div className="mb-6">
-                    <input {...register("firstName", { required: "First name is required" })} type="text" className="input" aria-describedby="First name" placeholder="First name" />
+                    <input {...register("firstName", { required: "First name is required" })} maxLength={100} type="text" className="input" aria-describedby="First name" placeholder="First name" />
                     {fieldErrorAlertMsg(errors.firstName)}
                 </div>
                 <div className="mb-6">
-                    <input {...register("lastName", { required: "Last name is required" })} type="text" className="input" aria-describedby="Last name" placeholder="Last name" />
+                    <input {...register("lastName", { required: "Last name is required" })} maxLength={100} type="text" className="input" aria-describedby="Last name" placeholder="Last name" />
                     {fieldErrorAlertMsg(errors.lastName)}
                 </div>
             </div>
             <div className="mb-6">
-                <input {...register("email", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} type="text" className="input" aria-describedby="Email Address" placeholder="Email address" />
+                <input {...register("email", { required: "Email address is required", pattern: { value: /^[^@\s]+@[^@\s]+$/, message: 'Email address is invalid' } })} maxLength={200} type="text" className="input" aria-describedby="Email Address" placeholder="Email address" />
                 {fieldErrorAlertMsg(errors.email)}
             </div>
             <div className="mb-6">
-                <input {...register("password", { required: "Password is required" })} type="password" className="input" aria-describedby="Password" placeholder="Password" />
+                <input {...register("password", { required: "Password is required" })} maxLength={100} type="password" className="input" aria-describedby="Password" placeholder="Password" />
                 {fieldErrorAlertMsg(errors.password)}
             </div>
             <button type="submit" className="button blue w-full">Sign up</button>
