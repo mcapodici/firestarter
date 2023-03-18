@@ -43,7 +43,7 @@ export default function SignupForm() {
     return <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-6">
-                <input {...register("firstName", { required: "First name is required" })} type="text" className="input" aria-describedby="First name" placeholder="First name" />
+                <input {...register("firstName", { required: "First name is required" })} maxLength={100} type="text" className="input" aria-describedby="First name" placeholder="First name" />
                 {fieldErrorAlertMsg(errors.firstName)}
             </div>
             <div className="mb-6">
