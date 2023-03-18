@@ -87,13 +87,13 @@ export default function Todos() {
     content = (
       <div className="m-auto max-w-5xl p-2">
         {(loading || todos.length) > 0 && (
-          <table className="min-w-full text-left text-sm font-light">
+          <table className="min-w-full text-left text-sm font-light max-w-full">
             <thead className="border-b font-medium dark:border-neutral-500">
               <tr>
                 <th scope="col" className="px-6 py-4">
                   #
                 </th>
-                <th scope="col" className="px-6 py-4 w-full">
+                <th scope="col" className="px-6 py-4">
                   What
                 </th>
                 <th scope="col" className="px-6 py-4">
@@ -127,7 +127,7 @@ export default function Todos() {
                     </td>
                     <td
                       className={
-                        `whitespace-nowrap px-6 py-4 ` +
+                        `wpx-6 py-4 ` +
                         (todo.done ? "line-through" : "")
                       }
                     >
@@ -143,7 +143,7 @@ export default function Todos() {
                       </button>
                       <button
                         onClick={() => toggle(todo.id)}
-                        className="button blue"
+                        className="button blue thin md:thick"
                         aria-label={`Toggle '${todo.title}'`}
                       >
                         <FontAwesomeIcon title="Toggle" icon={todo.done ? faToggleOff : faToggleOn} />
