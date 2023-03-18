@@ -49,3 +49,7 @@
 .menu-item {
   @apply block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-900 hover:font-semibold focus:text-gray-900 focus:font-semibold transition duration-150 ease-in-out
 }
+
+.title {
+  @apply text-5xl font-bold mt-0 mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-black
+}

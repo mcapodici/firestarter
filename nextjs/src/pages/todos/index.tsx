@@ -186,7 +186,7 @@ export default function Todos() {
     <>
       <Layout>
         <div className="m-auto max-w-5xl mt-20 text-center">
-          <h1 className="text-5xl font-bold pb-2 mt-0 mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-black">
+          <h1 className="title">
             Todos
           </h1>
           {content}
