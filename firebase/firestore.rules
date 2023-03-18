@@ -9,9 +9,9 @@ service cloud.firestore {
             user.firstName is string &&
             user.lastName is string &&
             user.firstName.size() > 0 &&
-            user.firstName.size() < 100 &&
+            user.firstName.size() <= 100 &&
             user.lastName.size() > 0 &&
-            user.lastName.size() < 100
+            user.lastName.size() <= 100
     }
 
     function validateTodo(todo) {
@@ -21,7 +21,7 @@ service cloud.firestore {
             todo.done is bool &&
             todo.uid.size() > 0 &&
             todo.title.size() > 0 &&
-            todo.title.size() < 100
+            todo.title.size() <= 100
     }
 
     match /databases/{database}/documents {

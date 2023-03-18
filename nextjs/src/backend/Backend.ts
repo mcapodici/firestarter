@@ -1,12 +1,13 @@
 import {
   AddResult,
   DeleteResult,
+  GetItemResult,
   GetListResult,
   IBackend,
-  ISignupData,
   LoginResult,
   LogoutResult,
   PasswordResetResult,
+  Profile,
   SetResult,
   SignupResult,
   Todo,
@@ -16,6 +17,7 @@ import doLogin from "./Login";
 import doLogout from "./Logout";
 import doResetPassword from "./ResetPassword";
 import * as todos from "./Todo";
+import * as profile from "./Profile";
 
 export class Backend implements IBackend {
   async login(email: string, password: string): Promise<LoginResult> {
@@ -27,7 +29,7 @@ export class Backend implements IBackend {
   async signup(
     email: string,
     password: string,
-    data: ISignupData
+    data: Profile
   ): Promise<SignupResult> {
     return await doSignUp(email, password, data);
   }
@@ -45,5 +47,11 @@ export class Backend implements IBackend {
   }
   async getTodos(uid: string): Promise<GetListResult<Todo & { id: string }>> {
     return await todos.getTodos(uid);
+  }
+  async getProfile(uid: string): Promise<GetItemResult<Profile>> {
+    return await profile.getProfile(uid);
+  }
+  async setProfile(uid: string, data: Profile): Promise<SetResult> {
+    return await profile.setProfile(uid, data);
   }
 }

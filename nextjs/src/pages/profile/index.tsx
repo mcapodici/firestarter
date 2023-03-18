@@ -1,4 +1,4 @@
-import SignupForm from '@/components/SignupForm'
+import ProfileForm from '@/components/ProfileForm'
 import Layout from '@/components/Layout'
 
 export default function Signup() {
@@ -6,11 +6,10 @@ export default function Signup() {
     <>
       <Layout>
         <div className="m-auto max-w-md mt-20 text-center">
-          <h1 className="title">Reap the benefits</h1>
-          <h3 className="text-3xl font-bold mb-8">Sign up for free now!</h3>
+          <h1 className="title">Your Profile</h1>
         </div>
         <div className="m-auto max-w-md">
-          <SignupForm />
+          <ProfileForm />
         </div>
       </Layout>
     </>

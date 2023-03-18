@@ -38,7 +38,7 @@ export async function addTodo(uid: string, title: string): Promise<AddResult> {
 
 export async function deleteTodo(id: string): Promise<DeleteResult> {
   try {
-    await deleteDoc(doc(firestore, TodoCollectionName, id));
+    await deleteDoc(doc(todoCollection(), id));
     return { result: "success" };
   } catch (e: any) {
     if (e instanceof Error) {
