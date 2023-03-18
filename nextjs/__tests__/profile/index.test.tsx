@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { Context } from "@/context/Context";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
@@ -15,11 +15,19 @@ describe("Profile", () => {
 
   let user: UserEvent;
 
-  function init() {
-    mockContext.backend.getProfile.mockResolvedValue({
-      result: "success",
-      item: { firstName: "Anthony", lastName: "Bean" },
-    });
+  function init(resolveGetProfile: boolean = true) {
+    if (resolveGetProfile) {
+      // Mocks the situation where we get an immediate response for the profile,
+      // from the server.
+      mockContext.backend.getProfile.mockResolvedValue({
+        result: "success",
+        item: { firstName: "Anthony", lastName: "Bean" },
+      });
+    } else {
+      // Mocks the situation where we are waiting indefinitely for the profile to
+      // load from the server:
+      mockContext.backend.getProfile.mockReturnValue(new Promise(() => {}));
+    }
     mockRouter.setCurrentUrl("/profile");
     user = userEvent.setup();
     mockContext.user = { uid: "123" } as User;
@@ -36,6 +44,9 @@ describe("Profile", () => {
   });
 
   async function fillInAllFieldsValid() {
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText("First name")).toBeInTheDocument();
+    });
     await user.clear(screen.getByPlaceholderText("First name"));
     await user.clear(screen.getByPlaceholderText("First name")); // Because of https://github.com/testing-library/user-event/discussions/970
     await user.clear(screen.getByPlaceholderText("Last name"));
@@ -58,8 +69,18 @@ describe("Profile", () => {
     expect(alerts[0]).toHaveTextContent(expectedAlert);
   }
 
+  it("shows loading symbols when loading", async () => {
+    init(false);
+    expect(screen.getByTitle("Loading Indicator")).toBeInTheDocument();
+    expect(screen.queryByPlaceholderText("First name")).toBeNull();
+    expect(screen.queryByPlaceholderText("Last name")).toBeNull();
+  });
+
   it("correct form elements shown, with loaded values", async () => {
     init();
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText("First name")).toBeInTheDocument();
+    });
     expect(mockContext.backend.getProfile).toBeCalledWith("123");
     expect(screen.getByText("Your Profile")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("First name")).toBeInTheDocument();
@@ -126,7 +147,10 @@ describe("Profile", () => {
       init();
       await fillInAllFieldsValid();
       await user.click(screen.getByText("Save"));
-      expect(mockContext.addToast).toBeCalledWith("There was a problem. Your changes have not been saved. Please try again.", "danger");
+      expect(mockContext.addToast).toBeCalledWith(
+        "There was a problem. Your changes have not been saved. Please try again.",
+        "danger"
+      );
     });
   });
 });
