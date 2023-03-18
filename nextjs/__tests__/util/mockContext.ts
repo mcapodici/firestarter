@@ -13,6 +13,8 @@ export const makeMockContext = () => {
     setTodo: jest.fn(),
     getTodos: jest.fn(),
     deleteTodo: jest.fn(),
+    setProfile: jest.fn(),
+    getProfile: jest.fn()
   };
 
   // Type check
