@@ -37,7 +37,7 @@ export default function SignupForm() {
                 }
             });
         }
-    }, [user])
+    }, [user, addToast, backend, setValue])
 
     const fieldErrorAlertMsg = (err: FieldError | undefined) => err && <div className="mt-2"><Alert level="danger">{err.message}</Alert></div>;
 

@@ -50,7 +50,9 @@ describe("Profile", () => {
 
   async function submitFormAndCheckAlertText(expectedAlert: string) {
     await user.click(screen.getByText("Save"));
-    await waitFor(async () => expect(await screen.findAllByRole("alert")).toHaveLength(1));
+    await waitFor(async () =>
+      expect(await screen.findAllByRole("alert")).toHaveLength(1)
+    );
     const alerts = await screen.findAllByRole("alert");
     expect(alerts).toHaveLength(1);
     expect(alerts[0]).toHaveTextContent(expectedAlert);
@@ -123,9 +125,8 @@ describe("Profile", () => {
       });
       init();
       await fillInAllFieldsValid();
-      await submitFormAndCheckAlertText(
-        "Sorry there was a server problem while signing up, please try again later."
-      );
+      await user.click(screen.getByText("Save"));
+      expect(mockContext.addToast).toBeCalledWith("There was a problem. Your changes have not been saved. Please try again.", "danger");
     });
   });
 });
