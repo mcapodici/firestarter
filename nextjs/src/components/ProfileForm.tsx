@@ -1,5 +1,5 @@
 import { Context } from "@/context/Context";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { match } from "ts-pattern";
 import { Alert } from "./Alert";
@@ -11,11 +11,32 @@ type FormData = {
 };
 
 export default function SignupForm() {
-    const { register, handleSubmit, formState: { errors }, setError } = useForm<FormData>();
-    const { addToast, backend } = useContext(Context);
+    const { register, handleSubmit, formState: { errors }, setError, setValue, } = useForm<FormData>();
+    const { addToast, backend, user } = useContext(Context);
 
     const onSubmit = async ({ firstName, lastName }: FormData) => {
+        if (user) {
+            const result = await backend.setProfile(user.uid, { firstName, lastName });
+            if (result.result === 'success') {
+                addToast('Your changes have been saved', 'success');
+            } else {
+                addToast('There was a problem. Your changes have not been saved. Please try again.', 'danger');
+            }
+        }
     };
+
+    useEffect(() => {
+        if (user) {
+            backend.getProfile(user.uid).then(res => {
+                if (res.result === 'success') {
+                    setValue('firstName', res.item.firstName);
+                    setValue('lastName', res.item.lastName);
+                } else {
+                    addToast("Sorry. A problem occurred loading your profile. Please referesh the page to try again");
+                }
+            });
+        }
+    }, [user])
 
     const fieldErrorAlertMsg = (err: FieldError | undefined) => err && <div className="mt-2"><Alert level="danger">{err.message}</Alert></div>;
 
