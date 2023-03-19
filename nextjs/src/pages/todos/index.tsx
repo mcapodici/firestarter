@@ -105,14 +105,14 @@ export default function Todos() {
               {loading ? (
                 <>
                   <tr className="border-b dark:border-neutral-500">
-                    <td className="whitespace-nowrap px-6 py-4 font-medium">
-                      <div className="w-8 h-8 content-placeholder"></div>
+                    <td>
+                      <div className="m-2 w-1/2 h-8 content-placeholder"></div>
                     </td>
                     <td>
-                      <div className="w-32 h-8 content-placeholder"></div>
+                      <div className="m-2 w-3/4 h-8 content-placeholder"></div>
                     </td>
-                    <td className="flex gap-2 p-2">
-                      <div className="w-32 h-8 content-placeholder"></div>
+                    <td>
+                      <div className="m-2 w-3/4 h-8 content-placeholder"></div>
                     </td>
                   </tr>
                 </>
