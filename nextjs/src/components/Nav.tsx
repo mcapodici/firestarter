@@ -26,7 +26,7 @@ export default function Nav() {
             onClick={() => {
               setExpandedNav((x) => !x);
             }}
-            className="border-0 py-3 lg:hidden leading-none text-xl bg-transparent text-gray-600 hover:text-gray-700 focus:text-gray-700 transition-shadow duration-150 ease-in-out mr-2"
+            className="py-3 lg:hidden mr-2"
             type="button"
             aria-controls="navigationItems"
             aria-expanded={expandedNav}
@@ -80,17 +80,10 @@ export default function Nav() {
         <div className="flex items-center lg:ml-auto">
           {!user && (
             <>
-              <Link
-                href="/login"
-                type="button"
-                className="inline-block px-6 py-2.5 mr-2 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out"
-              >
+              <Link href="/login" type="button" className="button flatwhite">
                 Login
               </Link>
-              <Link
-                href="/signup"
-                className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-              >
+              <Link href="/signup" className="button blue">
                 Sign up for free
               </Link>
             </>
@@ -106,7 +99,7 @@ export default function Nav() {
                 }}
               >
                 <Image
-                  className="border-blue-600 border-2 border-solid rounded-full overflow-hidden "
+                  className="border-blue-600 border-2 border-solid rounded-full overflow-hidden"
                   src="/example-profile-image.jpg"
                   alt="123"
                   fill
