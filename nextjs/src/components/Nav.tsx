@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Nav() {
   const [expandedNav, setExpandedNav] = useState(false);
   const [expandedUser, setExpandedUser] = useState(false);
-  const { user, backend, addToast } = useContext(Context);
+  const { user, backend, addToast, authLoading } = useContext(Context);
 
   const logout = async () => {
     setExpandedUser(false);
@@ -78,7 +78,10 @@ export default function Nav() {
         </div>
 
         <div className="flex items-center lg:ml-auto">
-          {!user && (
+          {authLoading && (
+            <div className="w-8 rounded-full h-8 content-placeholder"></div>
+          )}
+          {!authLoading && !user && (
             <>
               <Link href="/login" type="button" className="button flatwhite">
                 Login
@@ -89,7 +92,7 @@ export default function Nav() {
             </>
           )}
 
-          {user && (
+          {!authLoading && user && (
             <>
               <button
                 title="User Menu"
