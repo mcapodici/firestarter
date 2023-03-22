@@ -9,12 +9,12 @@ export const makeMockContext = () => {
     login: jest.fn(),
     logout: jest.fn(),
     resetPassword: jest.fn(),
-    addTodo: jest.fn(),
-    setTodo: jest.fn(),
-    getTodos: jest.fn(),
-    deleteTodo: jest.fn(),
     setProfile: jest.fn(),
-    getProfile: jest.fn()
+    getProfile: jest.fn(),
+    addUserItem: jest.fn(),
+    setUserItem: jest.fn(),
+    getUserItems: jest.fn(),
+    deleteUserItem: jest.fn(),
   };
 
   // Type check

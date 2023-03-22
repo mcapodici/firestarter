@@ -1,4 +1,4 @@
-import { Todo } from "@/backend/IBackend";
+import { Todo, WithId, WithUid } from "@/backend/IBackend";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert } from "@/components/Alert";
 import FieldErrorAlert from "@/components/FieldErrorAlert";
@@ -13,6 +13,8 @@ type FormData = {
   title: string;
 };
 
+const TodoCollectionName = "todo";
+
 export default function Todos() {
   const {
     register,
@@ -22,13 +24,13 @@ export default function Todos() {
   } = useForm<FormData>();
   const { user, backend, addToast, authLoading } = useContext(Context);
 
-  const [todos, setTodos] = useState<(Todo & { id: string })[]>([]);
+  const [todos, setTodos] = useState<(Todo & WithId & WithUid)[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
   const onSubmit = async ({ title }: FormData) => {
     if (user) {
-      const addTodoResult = await backend.addTodo(user.uid, title);
+      const addTodoResult = await backend.addUserItem<Todo>(TodoCollectionName, user.uid, { title, done: false });
       if (addTodoResult.result === "success") {
         todos.push({ id: addTodoResult.id, title, done: false, uid: user.uid });
         reset();
@@ -43,14 +45,14 @@ export default function Todos() {
 
   const toggle = async (id: string) => {
     const todo = todos.find((t) => t.id === id);
-    if (todo) backend.setTodo({ id: todo.id, done: !todo.done });
+    if (todo) backend.setUserItem<Todo>(TodoCollectionName, todo.id, { done: !todo.done });
     setTodos((todos) => {
       return todos.map((t) => (t.id === id ? { ...t, done: !t.done } : t));
     });
   };
 
   const deleteTodo = async (id: string) => {
-    backend.deleteTodo(id);
+    backend.deleteUserItem(TodoCollectionName, id);
     setTodos((todos) => {
       return todos.filter((t) => t.id !== id);
     });
@@ -59,7 +61,7 @@ export default function Todos() {
   useEffect(() => {
     if (user) {
       setLoading(true);
-      backend.getTodos(user.uid).then((todos) => {
+      backend.getUserItems<Todo>(TodoCollectionName, user.uid).then((todos) => {
         if (todos.result === "success") {
           setTodos(todos.items);
           setLoading(false);
