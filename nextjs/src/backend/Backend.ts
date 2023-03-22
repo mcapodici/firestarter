@@ -11,12 +11,14 @@ import {
   SetResult,
   SignupResult,
   Todo,
+  WithId,
+  WithUid,
 } from "./IBackend";
 import doSignUp from "./Signup";
 import doLogin from "./Login";
 import doLogout from "./Logout";
 import doResetPassword from "./ResetPassword";
-import * as todos from "./Todo";
+import * as useritem from "./UserItem";
 import * as profile from "./Profile";
 
 export class Backend implements IBackend {
@@ -36,22 +38,22 @@ export class Backend implements IBackend {
   async resetPassword(email: string): Promise<PasswordResetResult> {
     return await doResetPassword(email);
   }
-  async addTodo(uid: string, title: string): Promise<AddResult> {
-    return await todos.addTodo(uid, title);
-  }
-  async setTodo(todo: Partial<Todo> & { id: string }): Promise<SetResult> {
-    return await todos.setTodo(todo);
-  }
-  async deleteTodo(id: string): Promise<DeleteResult> {
-    return await todos.deleteTodo(id);
-  }
-  async getTodos(uid: string): Promise<GetListResult<Todo & { id: string }>> {
-    return await todos.getTodos(uid);
-  }
   async getProfile(uid: string): Promise<GetItemResult<Profile>> {
     return await profile.getProfile(uid);
   }
   async setProfile(uid: string, data: Profile): Promise<SetResult> {
     return await profile.setProfile(uid, data);
+  }
+  async addUserItem<T>(collectionName: string, uid: string, item: T): Promise<AddResult> {
+    return await useritem.addUserItem(collectionName, uid, item);
+  }
+  async setUserItem<T>(collectionName: string, id: string, item: Partial<T>): Promise<SetResult> {
+    return await useritem.setUserItem(collectionName, id, item);
+  }
+  async deleteUserItem(collectionName: string, id: string): Promise<DeleteResult> {
+    return await useritem.deleteUserItem(collectionName, id);
+  }
+  async getUserItems<T>(collectionName: string, uid: string): Promise<GetListResult<T & WithId & WithUid>> {
+    return await useritem.getUserItems(collectionName, uid);
   }
 }

@@ -6,7 +6,7 @@ import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 import { makeMockContext } from "__tests__/util/mockContext";
 import Todos from "@/pages/todos";
 import { User } from "firebase/auth";
-import { Todo } from "@/backend/IBackend";
+import { Todo, WithId, WithUid } from "@/backend/IBackend";
 import { act } from "react-dom/test-utils";
 import mockRouter from "next-router-mock";
 
@@ -17,11 +17,14 @@ describe("Todos", () => {
 
   let human: UserEvent;
 
-  async function renderWith(todos: Todo[] = [], hasUser: boolean = true) {
+  async function renderWith(
+    todos: (Todo & WithUid & WithId)[] = [],
+    hasUser: boolean = true
+  ) {
     await act(async () => {
       mockRouter.setCurrentUrl("/todos");
       human = userEvent.setup();
-      mockContext.backend.getTodos.mockResolvedValue({
+      mockContext.backend.getUserItems.mockResolvedValue({
         result: "success",
         items: todos,
       });
@@ -42,10 +45,10 @@ describe("Todos", () => {
   it("correct form elements shown when not logged in", async () => {
     await renderWith([], false);
     expect(screen.getByRole("heading", { name: "Todos" })).toBeInTheDocument();
-    expect(screen.getByText(/This page requires you to be signed in/i)).toBeInTheDocument();
     expect(
-      screen.queryByRole("button", { name: /Add Todo/i })
-    ).toBeNull();
+      screen.getByText(/This page requires you to be signed in/i)
+    ).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Add Todo/i })).toBeNull();
   });
 
   it("correct form elements shown", async () => {
@@ -98,7 +101,7 @@ describe("Todos", () => {
     await waitFor(() => {
       expect(screen.queryByRole("cell", { name: /my thing/i })).toBeNull();
     });
-    expect(mockContext.backend.deleteTodo).toBeCalledWith("1");
+    expect(mockContext.backend.deleteUserItem).toBeCalledWith("todo", "1");
   });
 
   it("it can toggle an item", async () => {
@@ -120,9 +123,8 @@ describe("Todos", () => {
         "line-through"
       );
     });
-    expect(mockContext.backend.setTodo).toBeCalledWith({
+    expect(mockContext.backend.setUserItem).toBeCalledWith("todo", "1", {
       done: false,
-      id: "1",
     });
     await human.click(screen.getByLabelText(/Toggle 'my thing'/));
     await waitFor(() => {
@@ -130,14 +132,13 @@ describe("Todos", () => {
         "line-through"
       );
     });
-    expect(mockContext.backend.setTodo).toBeCalledWith({
+    expect(mockContext.backend.setUserItem).toBeCalledWith("todo", "1", {
       done: true,
-      id: "1",
     });
   });
 
   it("it can add a todo", async () => {
-    mockContext.backend.addTodo.mockResolvedValue({
+    mockContext.backend.addUserItem.mockResolvedValue({
       result: "success",
       id: "456",
     });
@@ -149,6 +150,9 @@ describe("Todos", () => {
       expect(screen.queryByRole("cell", { name: /Buy Milk/i })).not.toBeNull();
     });
     expect(screen.queryAllByRole("row")).toHaveLength(3); // One header row and 2 data rows
-    expect(mockContext.backend.addTodo).toBeCalledWith("123", "Buy Milk");
+    expect(mockContext.backend.addUserItem).toBeCalledWith("todo", "123", {
+      done: false,
+      title: "Buy Milk",
+    });
   });
 });
