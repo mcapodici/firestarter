@@ -98,7 +98,7 @@ export default function Todos() {
                 <th scope="col" className="px-6 py-4">
                   What
                 </th>
-                <th scope="col" className="px-6 py-4">
+                <th scope="col" className="px-6 py-4 text-right">
                   Actions
                 </th>
               </tr>
@@ -135,7 +135,7 @@ export default function Todos() {
                     >
                       {todo.title}
                     </td>
-                    <td className="flex gap-2 p-2">
+                    <td className="flex justify-end gap-2 p-2">
                       <button
                         onClick={() => deleteTodo(todo.id)}
                         className="button blue"
