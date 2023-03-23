@@ -188,7 +188,7 @@ export default function Todos() {
     <>
       <Layout>
         <div className="m-auto max-w-5xl mt-20 text-center">
-          <h1 className="title">
+          <h1 className="title mb-12">
             Todos
           </h1>
           {content}

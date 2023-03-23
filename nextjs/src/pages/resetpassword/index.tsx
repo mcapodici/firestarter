@@ -9,7 +9,7 @@ export default function ResetPassword() {
     <>
       <Layout>
         <div className="m-auto max-w-md mt-20 text-center">
-          <h1 className="title">Reset Password</h1>
+          <h1 className="title mb-12">Reset Password</h1>
         </div>
         <div className="m-auto max-w-md">
           <ResetPasswordForm />

@@ -67,6 +67,5 @@
 }
 
 .title {
-  @apply text-5xl md:text-6xl xl:text-7xl font-bold pb-6 tracking-tight mt-0 mb-12 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-black;
+  @apply text-5xl md:text-6xl xl:text-7xl py-6 font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-black;
 }
-

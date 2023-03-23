@@ -12,7 +12,7 @@ export default function HeroSectionWithImage({ imgsrc, heading }: Props) {
         <div className="container mx-auto xl:px-32">
             <div className="lg:grid-cols-2 gap-12 grid items-center">
                 <div className="mt-12 lg:mt-0">
-                    <h1 className="title">
+                    <h1 className="title mb-12">
                         {heading}
                     </h1>
                     <a className="inline-block button blue big" data-mdb-ripple="true" data-mdb-ripple-color="light" href="#!" role="button">Get started</a>
