@@ -4,11 +4,13 @@ import { FirebaseError } from '@firebase/util';
 import { UserCredential } from 'firebase/auth';
 
 const createUserWithEmailAndPassword = jest.fn();
+const sendEmailVerification = jest.fn();
 const signup = new Backend().signup;
 
 jest.mock('firebase/auth',
     () => ({
-        createUserWithEmailAndPassword: (...args: any[]) => createUserWithEmailAndPassword(...args)
+        createUserWithEmailAndPassword: (...args: any[]) => createUserWithEmailAndPassword(...args),
+        sendEmailVerification: (...args: any[]) => sendEmailVerification(...args)
     }));
 
 const setDocMock = jest.fn();
@@ -27,18 +29,22 @@ describe('Signup Function', () => {
         const mockCredentials = { user: { uid: "123" } } as any as UserCredential;
         createUserWithEmailAndPassword.mockResolvedValue(mockCredentials);
         setDocMock.mockResolvedValue(undefined);
+        sendEmailVerification.mockResolvedValue(undefined);
         const result = await signup('ben@example.com', 'fred1234!', { firstName: 'ben', lastName: 'neb' });
         expect(result).toEqual({ result: 'success', uid: '123' });
         expect(createUserWithEmailAndPassword).toBeCalledWith(undefined, 'ben@example.com', 'fred1234!');
+        expect(sendEmailVerification).toBeCalledWith(mockCredentials.user);
     });
 
     it('Works with partial successful signup', async () => {
         const mockCredentials = { user: { uid: "123" } } as any as UserCredential;
         createUserWithEmailAndPassword.mockResolvedValue(mockCredentials);
         setDocMock.mockRejectedValue('saving data about user is not working for some reason');
+        sendEmailVerification.mockResolvedValue(undefined);
         const result = await signup('ben@example.com', 'fred1234!', { firstName: 'ben', lastName: 'neb' });
         expect(result).toEqual({ result: 'partial-success', uid: '123' });
         expect(createUserWithEmailAndPassword).toBeCalledWith(undefined, 'ben@example.com', 'fred1234!');
+        expect(sendEmailVerification).toBeCalledWith(mockCredentials.user);
     });
 
     describe('handles error code from Firebase:', () => {

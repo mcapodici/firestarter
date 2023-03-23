@@ -67,12 +67,11 @@ describe('Signup', () => {
       it('sends the submitted data to the signup service', async () => {
         expect(mockContext.backend.signup).toBeCalledWith("me@them.com", "password123", { firstName: 'Ben', lastName: 'Neb' });
       });
-      it('redirects to the login page', async () => {
-        expect(mockRouter.asPath).toEqual('/login');
+      it('redirects to the check inbox page', async () => {
+        expect(mockRouter.asPath).toEqual('/signup/checkinbox');
       });
-      it('shows success alert', async () => {
-        expect(mockContext.addToast).toBeCalledTimes(1);
-        expect(mockContext.addToast).toBeCalledWith('Your account has been created. You can now log in.', 'success');
+      it('shows no alert', async () => {
+        expect(mockContext.addToast).toBeCalledTimes(0);
       });
     });
     
@@ -85,12 +84,12 @@ describe('Signup', () => {
       it ('sends the submitted data to the signup service', async () => {
         expect(mockContext.backend.signup).toBeCalledWith("me@them.com", "password123", { firstName: 'Ben', lastName: 'Neb' });
       });
-      it ('redirects to the login page', async () => {
-        expect(mockRouter.asPath).toEqual('/login');
+      it('redirects to the check inbox page', async () => {
+        expect(mockRouter.asPath).toEqual('/signup/checkinbox');
       });
       it('shows partial success alert', async () => {
         expect(mockContext.addToast).toBeCalledTimes(1);
-        expect(mockContext.addToast).toBeCalledWith('Your account has been created, there was an issue trying to save your name to the profile, so you will need to do this again. You can now log in.', 'warning');
+        expect(mockContext.addToast).toBeCalledWith('There was an issue trying to save your name to the profile, so you will need to do this again.', 'warning');
       });
     });  
   });
