@@ -1,6 +1,7 @@
 import {
   AddResult,
   DeleteResult,
+  EmailVerificationResult,
   GetItemResult,
   GetListResult,
   IBackend,
@@ -18,8 +19,10 @@ import doSignUp from "./Signup";
 import doLogin from "./Login";
 import doLogout from "./Logout";
 import doResetPassword from "./ResetPassword";
+import doSendEmailVerification from "./SendEmailVerification";
 import * as useritem from "./UserItem";
 import * as profile from "./Profile";
+import { User } from "firebase/auth";
 
 export class Backend implements IBackend {
   async login(email: string, password: string): Promise<LoginResult> {
@@ -37,6 +40,9 @@ export class Backend implements IBackend {
   }
   async resetPassword(email: string): Promise<PasswordResetResult> {
     return await doResetPassword(email);
+  }
+  async sendEmailVerification(user: User): Promise<EmailVerificationResult> {
+    return await doSendEmailVerification(user);
   }
   async getProfile(uid: string): Promise<GetItemResult<Profile>> {
     return await profile.getProfile(uid);
