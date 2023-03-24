@@ -1,17 +1,56 @@
-![Firestarter Logo](https://firestarter-three.vercel.app/logo.png)
+![Firestarter Logo](readmeassets/logo.png?raw=true "Title")
 
-Firestarter is a way to quicky create your MVP web app. You just copy the code, then adapt to your project.
+## Firestarter is:
 
-It uses/will use Firebase, NextJS, Tailwind CSS, Tailwind Elements, and Github Actions
+📦 A starter kit for quickly building your next app. Side project or startup!
 
-## Still In Progress!
+🎨 That uses Tailwind for clean and easily adapatable design and style.
 
-I am working on the basic feature right now, so you are really early. Watch this space.
+🔥 That uses Firebase for a Serverless backend. No messing with machines!
+
+🚀 That uses NextJS, for convenient packaging and deployment of code and pages.
+
+⚛️ Uses ReactJS for responsive UI.
+
+🆓 Free to use! MIT Licensed.
+
+### How it works:
+
+1. Create your own [Firebase](https://firebase.google.com/) account and project.
+2. Sign up for free hosting at [Vercel](https://vercel.com/dashboard).
+3. Fork this repo, and clone to your machine.
+4. Set up the environment variables based on your Firebase account.
+5. Link your forked repo to Vercel.
+6. Well done you now have your app running in production!
+7. Buy a custom domain name and link to your Vercel account, if you want to.
+8. Customize by adding your own code and features, and/or removing any features you don't want from our examples.
+
+For detailed steps, see the [Getting started guide](#)
+
+## Firestarter is ideal for:
+
+* Side Projects 
+* Open Source projects
+* Startups
+* Internal Tools
+* Any time you want to iterate on an idea quickly...
 
 ## Demo
-You can see the latest deployed demo here:
+You can see the latest deployed demo here https://firestarter-three.vercel.app/ you can sign up for an account and add some TODOs! Be aware that the data can be destroyed at any time, so only use it for playing.
 
-https://firestarter-three.vercel.app/
+## Getting Started
 
-Eventually you will be able to sign up, log in and do stuff. However beware that the data may be cleared out at any time as this is just a demo.
+If you want to start using and developing off Firestarter [Getting started guide](#)
+
+## Documentation
+
+For detailed documentation see our [Developer's Documentation](#)
+
+## Screenshots
+
+![Screenshot of home page from 25 March 2023](readmeassets/firestarter-screenshot-1.png?raw=true "Title")
+![Screenshot of todos page from 25 March 2023](readmeassets/firestarter-screenshot-2.png?raw=true "Title")
+![Screenshot of todos page (mobile) from 25 March 2023](readmeassets/firestarter-screenshot-3.png?raw=true "Title")
+
+
 
