@@ -49,11 +49,11 @@ You can see the latest deployed demo here https://firestarter-three.vercel.app/ 
 
 ## Getting Started
 
-If you want to start using and developing off Firestarter [Getting started guide](#)
+If you want to start using and developing off Firestarter [Getting started guide](#) *(working on this now.... will be released soon)*
 
 ## Documentation
 
-For detailed documentation see our [Developer's Documentation](#)
+For detailed documentation see our [Developer's Documentation](#) *(working on this now.... will be released soon)*
 
 ## Screenshots
 
