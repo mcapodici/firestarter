@@ -15,6 +15,7 @@ export const makeMockContext = () => {
     setUserItem: jest.fn(),
     getUserItems: jest.fn(),
     deleteUserItem: jest.fn(),
+    sendEmailVerification: jest.fn()
   };
 
   // Type check
