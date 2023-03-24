@@ -42,18 +42,22 @@ export default function Signup() {
             To complete sign up, open the email we have sent you, and click the
             confirmation link.
           </p>
-          <button
-            className={`button blue mt-10 ${
-              disableEmailVerificationButton ? "disabled" : ""
-            }`}
-            onClick={sendEmail}
-            disabled={disableEmailVerificationButton}
-          >
-            <FontAwesomeIcon className="mr-2" color="white" icon={faEnvelope} />
-            {disableEmailVerificationButton
-              ? "Try again in 60s"
-              : "Send confirmation email again"}
-          </button>
+          {user && (
+            <button
+              className={`button blue mt-10 ${disableEmailVerificationButton ? "disabled" : ""}`}
+              onClick={sendEmail}
+              disabled={disableEmailVerificationButton}
+            >
+              <FontAwesomeIcon
+                className="mr-2"
+                color="white"
+                icon={faEnvelope}
+              />
+              {disableEmailVerificationButton
+                ? "Try again in 60s"
+                : "Send confirmation email again"}
+            </button>
+          )}
         </div>
       </Layout>
     </>

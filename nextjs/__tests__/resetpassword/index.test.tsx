@@ -1,13 +1,10 @@
-import { act, getByText, render, screen } from '@testing-library/react'
-import Signup from '@/pages/signup';
+import { act, render, screen } from '@testing-library/react'
 import { Context } from '@/context/Context';
 import userEvent from "@testing-library/user-event";
-import { SignupResult } from '@/backend/IBackend';
 import { UserEvent } from '@testing-library/user-event/dist/types/setup/setup';
 import mockRouter from 'next-router-mock';
 import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
 import { makeMockContext } from '__tests__/util/mockContext';
-import Login from '@/pages/login';
 import ResetPassword from '@/pages/resetpassword';
 
 jest.mock('next/router', () => require('next-router-mock'));
