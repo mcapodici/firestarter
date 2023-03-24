@@ -27,14 +27,14 @@ service cloud.firestore {
     match /databases/{database}/documents {
         match /users/{userId} {         
             // Allow users to read their own profile (doc id same as user id)
-            allow read: if request.auth != null && request.auth.uid == userId;
-            allow create, update: if request.auth != null && request.auth.uid == userId && validateUser(request.resource.data);
+            allow read: if request.auth != null && request.auth.token.email_verified && request.auth.uid == userId;
+            allow create, update: if request.auth != null && request.auth.token.email_verified && request.auth.uid == userId && validateUser(request.resource.data);
         }
 
         match /todo/{todo} {
-            allow read: if request.auth != null && request.auth.uid == resource.data.uid;
-            allow create, update: if request.auth != null && request.auth.uid == request.resource.data.uid && validateTodo(request.resource.data);
-            allow delete: if request.auth != null && request.auth.uid == resource.data.uid;
+            allow read: if request.auth != null && request.auth.token.email_verified && request.auth.uid == resource.data.uid;
+            allow create, update: if request.auth != null && request.auth.token.email_verified && request.auth.uid == request.resource.data.uid && validateTodo(request.resource.data);
+            allow delete: if request.auth != null && request.auth.token.email_verified && request.auth.uid == resource.data.uid;
         }
     }
 } 
