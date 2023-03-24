@@ -2,10 +2,12 @@
 
 # Get your app idea off the ground - darn fast!
 
-<div style="display:flex; gap:3px; margin:10px 0 10px 0">
-<img alt="Screenshot" src="readmeassets/firestarter-screenshot-1.png?raw=true"  width="50%" height="50%">
-<img alt="Screenshot" src="readmeassets/firestarter-screenshot-2.png?raw=true"  width="50%" height="50%">
-</div>
+Start off with a site like this:
+
+![Screenshots from 25 March 2023](readmeassets/firestarter-screenshot-1-2.png?raw=true "Title")
+
+... with Sign Up, Log in, Reset Password, Email Verification, CRUD template, modern design, unit tests (if you want to use them), and clean code. Just add your million dollar idea!
+
 
 ## Firestarter is:
 
