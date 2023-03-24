@@ -36,6 +36,10 @@
   @apply shadow-md bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-800;
 }
 
+.button.disabled {
+  @apply bg-gray-300 text-white hover:bg-gray-300 focus:bg-gray-300 active:bg-gray-300 cursor-auto;
+}
+
 .input {
   @apply block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
 }
@@ -67,6 +71,5 @@
 }
 
 .title {
-  @apply text-5xl md:text-6xl xl:text-7xl font-bold pb-6 tracking-tight mt-0 mb-12 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-black;
+  @apply text-5xl md:text-6xl xl:text-7xl py-6 font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-black;
 }
-

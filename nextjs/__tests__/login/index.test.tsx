@@ -54,9 +54,9 @@ describe('Login', () => {
   });
 
   describe('on valid input submission', () => {
-    describe('with success response', () => {
+    describe('with success response and verified user', () => {
       beforeEach(async () => {
-        mockContext.backend.login.mockResolvedValue({ result: 'success' });
+        mockContext.backend.login.mockResolvedValue({ result: 'success', emailVerified: true });
         await fillInAllFieldsValid();
         await user.click(screen.getByRole('button', { name: /Log in/i }));
       })
@@ -69,6 +69,24 @@ describe('Login', () => {
       it('shows success alert', async () => {
         expect(mockContext.addToast).toBeCalledTimes(1);
         expect(mockContext.addToast).toBeCalledWith('You are now logged in.', 'success');
+      });
+    });
+
+    describe('with success response and unverified user', () => {
+      beforeEach(async () => {
+        mockContext.backend.login.mockResolvedValue({ result: 'success', emailVerified: false });
+        await fillInAllFieldsValid();
+        await user.click(screen.getByRole('button', { name: /Log in/i }));
+      })
+      it('submits the data correctly', async () => {
+        expect(mockContext.backend.login).toBeCalledWith("me@them.com", "password123");
+      });
+      it('redirects to the check inbox page', async () => {
+        expect(mockRouter.asPath).toEqual('/signup/checkinbox');
+      });
+      it('shows warning alert', async () => {
+        expect(mockContext.addToast).toBeCalledTimes(1);
+        expect(mockContext.addToast).toBeCalledWith('You need to verify your email.', 'warning');
       });
     });
   });

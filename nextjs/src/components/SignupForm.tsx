@@ -21,12 +21,10 @@ export default function SignupForm() {
         const result = await backend.signup(email, password, { firstName, lastName });
 
         if (result.result === 'success' || result.result === 'partial-success') {
-            if (result.result === 'success') {
-                addToast('Your account has been created. You can now log in.', 'success');
-            } else {
-                addToast('Your account has been created, there was an issue trying to save your name to the profile, so you will need to do this again. You can now log in.', 'warning');
+            if (result.result !== 'success') {
+                addToast('There was an issue trying to save your name to the profile, so you will need to do this again.', 'warning');
             }
-            router.push({ pathname: '/login' });
+            router.push({ pathname: '/signup/checkinbox' });
             return;
         }
 

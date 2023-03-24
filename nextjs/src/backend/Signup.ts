@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, UserCredential } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, UserCredential } from "firebase/auth";
 import { FirebaseError } from "@firebase/util";
 import { Profile, SignupResult } from "./IBackend";
 import { auth, firestore } from "@/firebase/config";
@@ -26,6 +26,14 @@ export default async function doSignup(email: string, password: string, data: Pr
             return { result: 'accounts-not-enabled' };
         }
         return { result: 'fail', message: e.message };
+    }
+
+    try {
+        await sendEmailVerification(credential.user);
+    } catch {
+        // Ignore any errors with this: If the user was successfully created this is likely
+        // to succeed. If it doesn't then when the user tries to log in they will be given
+        // an opportunity to resend it.
     }
 
     try {

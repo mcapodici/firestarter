@@ -1,3 +1,5 @@
+import { User } from "firebase/auth";
+
 export type SignupResult =
   | { result: "success"; uid: string }
 
@@ -12,7 +14,7 @@ export type SignupResult =
   | { result: "invalid-email" };
 
 export type LoginResult =
-  | { result: "success"; uid: string }
+  | { result: "success"; uid: string, emailVerified: boolean }
   | { result: "user-not-found" }
   | { result: "wrong-password" }
   | { result: "user-disabled" }
@@ -22,6 +24,10 @@ export type PasswordResetResult =
   | { result: "success" }
   | { result: "user-not-found" }
   | { result: "fail"; message: string };
+
+  export type EmailVerificationResult =
+    | { result: "success" }
+    | { result: "fail"; message: string };
 
 export type AddResult =
   | { result: "success"; id: string }
@@ -77,6 +83,8 @@ export interface IBackend {
   logout(): Promise<LogoutResult>;
 
   resetPassword(email: string): Promise<PasswordResetResult>;
+
+  sendEmailVerification(user: User): Promise<EmailVerificationResult>;
 
   /*** Gets the user profile for a given user */
   getProfile(uid: string): Promise<GetItemResult<Profile>>;
