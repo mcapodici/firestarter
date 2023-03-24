@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 import { Context } from "@/context/Context";
+import Link from "next/link";
 
 const PERIOD_TO_DISABLE_EMAIL_VERIFICATION_BUTTON_AFTER_USE_MS = 60000;
 
@@ -40,7 +41,7 @@ export default function Signup() {
           </div>
           <p className="text-left mt-10">
             To complete sign up, open the email we have sent you, and click the
-            confirmation link.
+            confirmation link. When you have done this, <Link className="anchor" href="/">click here to return to the home page.</Link>
           </p>
           {user && (
             <button

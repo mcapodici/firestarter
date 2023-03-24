@@ -40,7 +40,8 @@ describe("CheckInbox", () => {
     ).toBeNull();
     expect(
       screen.getByText(
-        "To complete sign up, open the email we have sent you, and click the confirmation link."
+        "To complete sign up, open the email we have sent you, and click the confirmation link.",
+        { exact: false }
       )
     ).toBeInTheDocument();
   });
@@ -55,7 +56,8 @@ describe("CheckInbox", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "To complete sign up, open the email we have sent you, and click the confirmation link."
+        "To complete sign up, open the email we have sent you, and click the confirmation link.",
+        { exact: false }
       )
     ).toBeInTheDocument();
   });
