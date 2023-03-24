@@ -17,10 +17,11 @@ describe('Login Function', () => {
     })
 
     it('Works with successful login', async () => {
-        const mockCredentials = { user: { uid: "123" } } as any as UserCredential;
+    let credential: UserCredential;
+        const mockCredentials = { user: { uid: "123", emailVerified: true } } as any as UserCredential;
         signInWithEmailAndPassword.mockResolvedValue(mockCredentials);
         const result = await login('ben@example.com', 'fred1234!');
-        expect(result).toEqual({ result: 'success', uid: '123' });
+        expect(result).toEqual({ result: 'success', uid: '123', emailVerified: true });
         expect(signInWithEmailAndPassword).toBeCalledWith(undefined, 'ben@example.com', 'fred1234!');
     });
 

@@ -5,10 +5,9 @@ import { auth } from "@/firebase/config";
 import { AUTH_INVALID_EMAIL, AUTH_USER_DISABLED, AUTH_USER_NOT_FOUND, AUTH_WRONG_PASSWORD } from "@/firebase/errorCodes";
 
 export default async function doLogin(email: string, password: string): Promise<LoginResult> {
-    let credential: UserCredential;
     try {
-        credential = await signInWithEmailAndPassword(auth, email, password);
-        return { result: 'success', uid: credential.user.uid };
+        const { user: {uid, emailVerified}} = await signInWithEmailAndPassword(auth, email, password);        
+        return { result: 'success', uid, emailVerified };
     } catch (e: unknown) {
         if (!(e instanceof FirebaseError)) {
             return { result: 'fail', message: '' };

@@ -14,7 +14,7 @@ export type SignupResult =
   | { result: "invalid-email" };
 
 export type LoginResult =
-  | { result: "success"; uid: string }
+  | { result: "success"; uid: string, emailVerified: boolean }
   | { result: "user-not-found" }
   | { result: "wrong-password" }
   | { result: "user-disabled" }
