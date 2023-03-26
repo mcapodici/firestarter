@@ -45,15 +45,15 @@ For detailed steps, see the [Getting started guide](#)
 * Any time you want to iterate on an idea quickly...
 
 ## Demo
-You can see the latest deployed demo here https://firestarter-three.vercel.app/ you can sign up for an account and add some TODOs! Be aware that the data can be destroyed at any time, so only use it for playing.
+You can see the latest deployed demo here https://demo.firestarterapp.com you can sign up for an account and add some TODOs! Be aware that the data can be destroyed at any time, so only use it for playing.
 
-## Getting Started
+## Setup
 
-If you want to start using and developing off Firestarter [Getting started guide](#) *(working on this now.... will be released soon)*
+If you want to start using and developing off Firestarter, see the [Setup docs](https://docs.firestarterapp.com/setup/)
 
 ## Documentation
 
-For detailed documentation see our [Developer's Documentation](#) *(working on this now.... will be released soon)*
+Once you are setup, you can read the [Documentation](https://docs.firestarterapp.com) to understand how the code works and see examples of how you can extend Firestarter to do what you need.
 
 ## Screenshots
 
