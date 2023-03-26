@@ -34,7 +34,7 @@ Start off with a site like this:
 7. Buy a custom domain name and link to your Vercel account, if you want to.
 8. Customize by adding your own code and features, and/or removing any features you don't want from our examples.
 
-For detailed steps, see the [Getting started guide](#)
+For detailed steps, see the [Setup docs](https://docs.firestarterapp.com/setup/)
 
 ## Firestarter is ideal for:
 
