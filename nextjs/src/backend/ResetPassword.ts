@@ -1,7 +1,7 @@
 import { sendPasswordResetEmail } from "firebase/auth";
 import { FirebaseError } from "@firebase/util";
 import { PasswordResetResult } from "./IBackend";
-import { auth } from "@/firebase/config";
+import { auth } from "@/firebase/init";
 import { AUTH_INVALID_EMAIL, AUTH_USER_NOT_FOUND } from "@/firebase/errorCodes";
 
 export default async function doResetPassword(email: string): Promise<PasswordResetResult> {

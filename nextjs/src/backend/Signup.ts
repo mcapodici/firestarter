@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, sendEmailVerification, UserCredential } from "firebase/auth";
 import { FirebaseError } from "@firebase/util";
 import { Profile, SignupResult } from "./IBackend";
-import { auth, firestore } from "@/firebase/config";
+import { auth, firestore } from "@/firebase/init";
 import { AUTH_EMAIL_ALREADY_IN_USE, AUTH_INVALID_EMAIL, AUTH_OPERATION_NOT_ALLOWED, AUTH_WEAK_PASSWORD } from "@/firebase/errorCodes";
 import { doc, setDoc } from "firebase/firestore";
 
