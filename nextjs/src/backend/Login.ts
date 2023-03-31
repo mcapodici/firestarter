@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword, UserCredential } from "firebase/auth";
 import { FirebaseError } from "@firebase/util";
 import { LoginResult } from "./IBackend";
-import { auth } from "@/firebase/config";
+import { auth } from "@/firebase/init";
 import { AUTH_INVALID_EMAIL, AUTH_USER_DISABLED, AUTH_USER_NOT_FOUND, AUTH_WRONG_PASSWORD } from "@/firebase/errorCodes";
 
 export default async function doLogin(email: string, password: string): Promise<LoginResult> {

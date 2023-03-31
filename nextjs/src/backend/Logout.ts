@@ -2,7 +2,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { LogoutResult } from "./IBackend";
-import { auth } from "@/firebase/config";
+import { auth } from "@/firebase/init";
 
 export default async function doLogout(): Promise<LogoutResult> {
   try {

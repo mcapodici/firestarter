@@ -2,7 +2,7 @@ import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import '../styles/index.css'
 import { useEffect } from 'react';
-import { initFirebase } from '@/firebase/config';
+import { initFirebase } from '@/firebase/init';
 import { useToasts } from '@/components/Toasts';
 import { Context } from '@/context/Context';
 import { Backend } from '@/backend/Backend';

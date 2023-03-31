@@ -1,26 +1,11 @@
-
-import { isServerSide } from "@/backend/ServerSideUtil";
-import { FirebaseApp, getApp, initializeApp } from "firebase/app";
-import { Auth, getAuth } from "firebase/auth";
-import { Firestore, getFirestore } from  "firebase/firestore";
-
-export let app: FirebaseApp;
-export let auth: Auth;
-export let firestore: Firestore;
-
-export const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_SENDERID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APPID
+const firebaseConfig = {
+  apiKey: "AIzaSyASt_NLUD6El7RK6KlvXC4Y1Eq1VNFbUfM",
+  authDomain: "fire-starter-demo.firebaseapp.com",
+  projectId: "fire-starter-demo",
+  storageBucket: "fire-starter-demo.appspot.com",
+  messagingSenderId: "827388889265",
+  appId: "1:827388889265:web:ef19224fcacb90bd613a90",
+  measurementId: "G-BHZBC53LCQ"
 };
 
-export function initFirebase() {
-  if (!isServerSide()) {
-    app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    firestore = getFirestore(app);
-  }
-}
+export default firebaseConfig;
