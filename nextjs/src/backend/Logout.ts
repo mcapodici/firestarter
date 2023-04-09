@@ -9,6 +9,7 @@ export default async function doLogout(): Promise<LogoutResult> {
     await signOut(auth);
     return { result: "success" };
   } catch (e: unknown) {
+    console.error(e);
       return { result: "fail" };
   }
 }

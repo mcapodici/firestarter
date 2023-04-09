@@ -105,6 +105,7 @@ export default function Nav() {
                   className="border-blue-600 border-2 border-solid rounded-full overflow-hidden"
                   src="/example-profile-image.jpg"
                   alt="123"
+                  sizes="2.5rem"
                   fill
                 />
               </button>

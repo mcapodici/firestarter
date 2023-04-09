@@ -10,6 +10,7 @@ export default async function doSignup(email: string, password: string, data: Pr
     try {
         credential = await createUserWithEmailAndPassword(auth, email, password);
     } catch (e: unknown) {
+        console.error(e);
         if (!(e instanceof FirebaseError)) {
             return { result: 'fail', message: '' }
         };
@@ -40,6 +41,7 @@ export default async function doSignup(email: string, password: string, data: Pr
         const userRef = doc(firestore, "users", credential.user.uid);
         await setDoc(userRef, data)
     } catch (e: unknown) {
+        console.error(e);
         return { result: 'partial-success', uid: credential.user.uid }
     }
 

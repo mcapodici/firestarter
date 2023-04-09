@@ -9,6 +9,7 @@ export default async function doLogin(email: string, password: string): Promise<
         const { user: {uid, emailVerified}} = await signInWithEmailAndPassword(auth, email, password);        
         return { result: 'success', uid, emailVerified };
     } catch (e: unknown) {
+        console.error(e);
         if (!(e instanceof FirebaseError)) {
             return { result: 'fail', message: '' };
         };

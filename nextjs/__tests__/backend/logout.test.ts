@@ -21,9 +21,11 @@ describe('Logout Function', () => {
     });
 
     it('Handles an unexpected error entirely', async () => {
+        jest.spyOn(console, 'error').mockImplementation();
         signOut.mockRejectedValue('xyz');
         const result = await logout();
         expect(result.result).toBe('fail');
         expect(signOut).toBeCalled();
+        expect(console.error).toBeCalledWith('xyz');
     });
 });

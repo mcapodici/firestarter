@@ -23,18 +23,22 @@ describe("Reset Password Function", () => {
   });
 
   it("Handles an unexpected result from Firebase", async () => {
+    jest.spyOn(console, 'error').mockImplementation();
     sendEmailVerificationFirebase.mockRejectedValue(
       new FirebaseError("auth/something-unencountered", "Cosmic Radiation")
     );
     const result = await sendEmailVerification({ uid: "123" } as User);
     expect(result).toEqual({ result: "fail", message: "Cosmic Radiation" });
     expect(sendEmailVerificationFirebase).toBeCalledWith({ uid: "123" } as User);
+    expect(console.error).toBeCalledWith(new FirebaseError('auth/something-unencountered', 'Cosmic Radiation'));
   });
 
   it("Handles an unexpected error entirely", async () => {
+    jest.spyOn(console, 'error').mockImplementation();
     sendEmailVerificationFirebase.mockRejectedValue("xyz");
     const result = await sendEmailVerification({ uid: "123" } as User);
     expect(result).toEqual({ result: "fail", message: "" });
     expect(sendEmailVerificationFirebase).toBeCalledWith({ uid: "123" } as User);
+    expect(console.error).toBeCalledWith('xyz');
   });
 });

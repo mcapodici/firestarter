@@ -25,31 +25,39 @@ describe('Reset Password Function', () => {
 
     describe('handles error code from Firebase:', () => {
         it(AUTH_INVALID_EMAIL, async () => {
+            jest.spyOn(console, 'error').mockImplementation();
             sendPasswordResetEmail.mockRejectedValue(new FirebaseError(AUTH_INVALID_EMAIL, ''));
             const result = await resetPassword('ben@example.com');
             expect(result).toEqual({ result: 'user-not-found' });
             expect(sendPasswordResetEmail).toBeCalledWith(undefined, 'ben@example.com');
+            expect(console.error).toBeCalledWith(new FirebaseError(AUTH_INVALID_EMAIL, ''));
         });
 
         it(AUTH_USER_NOT_FOUND, async () => {
+            jest.spyOn(console, 'error').mockImplementation();
             sendPasswordResetEmail.mockRejectedValue(new FirebaseError(AUTH_USER_NOT_FOUND, ''));
             const result = await resetPassword('ben@example.com');
             expect(result).toEqual({ result: 'user-not-found' });
             expect(sendPasswordResetEmail).toBeCalledWith(undefined, 'ben@example.com');
+            expect(console.error).toBeCalledWith(new FirebaseError(AUTH_USER_NOT_FOUND, ''));
         });
     });
 
     it('Handles an unexpected result from Firebase', async () => {
+        jest.spyOn(console, 'error').mockImplementation();
         sendPasswordResetEmail.mockRejectedValue(new FirebaseError('auth/something-unencountered', 'Cosmic Radiation'));
         const result = await resetPassword('ben@example.com');
         expect(result).toEqual({ result: 'fail', message: 'Cosmic Radiation' });
         expect(sendPasswordResetEmail).toBeCalledWith(undefined, 'ben@example.com');
+        expect(console.error).toBeCalledWith(new FirebaseError('auth/something-unencountered', 'Cosmic Radiation'));
     });
 
     it('Handles an unexpected error entirely', async () => {
+        jest.spyOn(console, 'error').mockImplementation();
         sendPasswordResetEmail.mockRejectedValue('xyz');
         const result = await resetPassword('ben@example.com');
         expect(result).toEqual({ result: 'fail', message: '' });
         expect(sendPasswordResetEmail).toBeCalledWith(undefined, 'ben@example.com');
+        expect(console.error).toBeCalledWith('xyz');
     });
 });
