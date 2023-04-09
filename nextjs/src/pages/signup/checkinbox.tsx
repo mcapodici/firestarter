@@ -22,7 +22,8 @@ export default function Signup() {
           PERIOD_TO_DISABLE_EMAIL_VERIFICATION_BUTTON_AFTER_USE_MS
         );
         addToast("Your confirmation link has been sent", "success");
-      } catch (ex) {
+      } catch (e) {
+        console.error(e);
         addToast(
           "Your confirmation link could not be sent, please try again later. Sorry.",
           "danger"

@@ -6,6 +6,7 @@ export default async function sendEmailVerification(user: User): Promise<EmailVe
     try {
         await sendEmailVerificationFirebase(user);
     } catch (e: unknown) {
+        console.error(e);
         if (!(e instanceof FirebaseError)) {
             return { result: 'fail', message: '' }
         };

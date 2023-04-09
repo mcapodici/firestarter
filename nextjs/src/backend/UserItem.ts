@@ -32,7 +32,8 @@ export async function addUserItem<T>(
   try {
     const result = await addDoc<T & WithUid>(collectionFor(collection), { ...item, uid });
     return { result: "success", id: result.id };
-  } catch (e: any) {
+  } catch (e: unknown) {
+    console.error(e);
     if (e instanceof Error) {
       return { result: "fail", message: e.message };
     }
@@ -47,7 +48,8 @@ export async function deleteUserItem(
   try {
     await deleteDoc(doc(collectionFor(collection), id));
     return { result: "success" };
-  } catch (e: any) {
+  } catch (e: unknown) {
+    console.error(e);
     if (e instanceof Error) {
       return { result: "fail", message: e.message };
     }
@@ -66,7 +68,8 @@ export async function setUserItem<T>(
       item as UpdateData<T>
     );
     return { result: "success" };
-  } catch (e: any) {
+  } catch (e: unknown) {
+    console.error(e);
     if (e instanceof Error) {
       return { result: "fail", message: e.message };
     }
@@ -85,7 +88,8 @@ export async function getUserItems<T>(
       id: d.id,
     }));
     return { result: "success", items: docs };
-  } catch (e: any) {
+  } catch (e: unknown) {
+    console.error(e);
     if (e instanceof Error) {
       return { result: "fail", message: e.message };
     }

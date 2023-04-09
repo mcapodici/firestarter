@@ -8,6 +8,7 @@ export default async function doResetPassword(email: string): Promise<PasswordRe
     try {
         await sendPasswordResetEmail(auth, email);
     } catch (e: unknown) {
+        console.error(e);
         if (!(e instanceof FirebaseError)) {
             return { result: 'fail', message: '' }
         };
