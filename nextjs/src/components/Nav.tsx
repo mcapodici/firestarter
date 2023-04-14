@@ -58,7 +58,7 @@ export default function Nav() {
           } lg:block grow items-center basis-full lg:basis-0`}
           id="navigationItems"
         >
-          <ul className="mr-auto lg:flex lg:flex-row">
+          <ul className="mr-auto lg:flex lg:flex-row mb-2 lg:mb-0">
             <li className="nav-item">
               <Link href="/todos" className="menu-item">
                 Todos
@@ -69,7 +69,7 @@ export default function Nav() {
                 Team
               </Link>
             </li>
-            <li className="nav-item mb-2 lg:mb-0">
+            <li className="nav-item">
               <Link href="/" className="menu-item">
                 Projects
               </Link>
