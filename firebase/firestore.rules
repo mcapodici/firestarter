@@ -32,9 +32,9 @@ service cloud.firestore {
         }
 
         match /todo/{todo} {
-            allow read: if request.auth != null && request.auth.token.email_verified && request.auth.uid == resource.data.uid;
-            allow create, update: if request.auth != null && request.auth.token.email_verified && request.auth.uid == request.resource.data.uid && validateTodo(request.resource.data);
-            allow delete: if request.auth != null && request.auth.token.email_verified && request.auth.uid == resource.data.uid;
+            allow read, delete: if request.auth != null && request.auth.token.email_verified && request.auth.uid == resource.data.uid;
+            allow create: if request.auth != null && request.auth.token.email_verified && request.auth.uid == request.resource.data.uid && validateTodo(request.resource.data);
+            allow update: if request.auth != null && request.auth.token.email_verified && request.auth.uid == resource.data.uid && request.auth.uid == request.resource.data.uid && validateTodo(request.resource.data);
         }
     }
 } 
